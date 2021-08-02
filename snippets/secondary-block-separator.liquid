@@ -1,0 +1,22 @@
+{% include 'settings' %}
+
+{%- assign sb_separator_class = '' -%}
+
+{% comment %}
+  Spacing
+{% endcomment %}
+{%- assign sb_separator_class = sb_separator_class | append: ' ' | append: block.settings.margin_top -%}
+{%- assign sb_separator_class = sb_separator_class | append: ' ' | append: block.settings.margin_bottom -%}
+
+{% comment %}
+  Show line
+{% endcomment %}
+{% if block.settings.show_line %}
+ {%- assign sb_separator_class = sb_separator_class | append: ' lined' -%}
+{% endif %}
+
+<h1 class="visually-hidden">{{ 'general.accessibility.separator' | t }}</h1>
+
+<div class="separator {{ sb_separator_class }} {{ block.settings.width }}" style="border-bottom-color: {{ block.settings.line_color }}; border-bottom-width: {{ block.settings.line_thickness }}px"></div>
+
+{%- assign sb_separator_class = null -%}

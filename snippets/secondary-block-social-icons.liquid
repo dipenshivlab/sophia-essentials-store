@@ -1,0 +1,46 @@
+{% include 'settings' %}
+
+{%- assign sb_social_networks_string = 'facebook,twitter,pinterest,instagram,tumblr,snapchat,youtube,vimeo' -%}
+{%- assign sb_social_networks = sb_social_networks_string | split: ',' -%}
+{%- assign sb_social_networks_count = 0 %}
+
+<style>
+  .secondary-block.section-block-social-icons i {
+    font-size: {{ block.settings.icon_size | escape }}px;
+  }
+</style>
+
+<div class="social-media-icons">
+{% for sb_network in sb_social_networks %}
+
+  {%- assign sb_network_link_setting = 'social_*1_link' | replace: '*1', sb_network -%}
+
+  {% comment %}
+    Set icon names for FontAwesome
+  {% endcomment %}
+  {% case sb_network %}
+    {% when 'youtube' %}
+      {%- assign network_icon = 'youtube-play' -%}
+    {% else %}
+      {%- assign network_icon = sb_network -%}
+  {% endcase %}
+
+  {% comment %}
+    Icon
+  {% endcomment %}
+  {% if settings[sb_network_link_setting] != '' %}
+    {%- assign sb_social_networks_count = sb_social_networks_count | plus: 1 %}
+    <a class="social-media-icon inline-block text-color" href="{{ settings[sb_network_link_setting] }}" data-target-new>
+    <i class="fa fa-{{ network_icon }}"></i>
+    </a>
+  {% endif %}
+
+{% endfor %}
+
+{% comment %}
+  If no account URLs have been set
+{% endcomment %}
+{% if sb_social_networks_count == 0 %}
+  <p>{{ 'onboarding.add_social_urls' | t }}</p>
+{% endif %}
+</div>

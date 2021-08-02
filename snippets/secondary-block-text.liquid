@@ -1,0 +1,16 @@
+{% include 'settings' %}
+
+{% comment %}
+  CSS
+{% endcomment %}
+<style>
+  #{{ block_id }} .rte {
+    {% if block.settings.color %}
+      color: {{ block.settings.color }};
+    {% endif %}
+  }
+</style>
+
+<span class="rte">
+  {{ block.settings.text }}
+</span>

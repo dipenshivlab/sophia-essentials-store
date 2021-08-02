@@ -1,0 +1,107 @@
+{%- assign meta_social_image_size = meta_social_image_size -%}
+{%- assign meta_social_description = page_description | default: shop.description | default: shop.name -%}
+
+{% comment %}
+  Open Graph
+{% endcomment %}
+
+{% comment %}
+  Index
+{% endcomment %}
+{% if template_type == 'index' %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ page_title }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:description" content="{{ meta_social_description }}">
+
+{% comment %}
+  Product
+{% endcomment %}
+{% elsif template_type == 'product' %}
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="{{ product.title | strip_html }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:description" content="{{ product.description | strip_html }}">
+  {% for media in product.media, limit: 3 %}
+    {% assign image = media.preview_image %}
+    <meta property="og:image" content="http:{{ image | img_url: meta_social_image_size }}">
+    <meta property="og:image:secure_url" content="https:{{ image | img_url: meta_social_image_size }}">
+  {% endfor %}
+  <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html }}">
+  <meta property="og:price:currency" content="{{ shop.currency }}">
+
+{% comment %}
+  Article
+{% endcomment %}
+{% elsif template_type == 'article' %}
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{ article.title | strip_html }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:description" content="{{ article.excerpt_or_content | strip_html }}">
+  {% if article.image %}
+    <meta property="og:image" content="http:{{ article | img_url: meta_social_image_size }}">
+    <meta property="og:image:secure_url" content="https:{{ article | img_url: meta_social_image_size }}">
+  {% endif %}
+
+{% comment %}
+  Password
+{% endcomment %}
+{% elsif template_type == 'password' %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ shop.name }}">
+  <meta property="og:url" content="{{ canonical_url | replace: '/password', '' }}">
+  <meta property="og:description" content="{{ shop.description | default: shop.name }}">
+
+{% comment %}
+  Default
+{% endcomment %}
+{% else %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ page_title }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:description" content="{{ meta_social_description }}">
+{% endif %}
+
+<meta property="og:site_name" content="{{ shop.name }}">
+
+
+{% comment %}
+  Twitter cards
+{% endcomment %}
+
+{% if template_type == 'article' and article.image %}
+  <meta name="twitter:card" content="summary_large_image">
+{% else %}
+  <meta name="twitter:card" content="summary">
+{% endif %}
+{% unless settings.social_twitter_url == blank %}
+  <meta name="twitter:site" content="@{{ settings.social_twitter_link | split: 'twitter.com/' | last }}">
+{% endunless %}
+
+{% comment %}
+  Index
+{% endcomment %}
+{% if template_type == 'index' %}
+  <meta name="twitter:title" content="{{ page_title }}">
+  <meta name="twitter:description" content="{{ meta_social_description }}">
+
+{% comment %}
+  Product
+{% endcomment %}
+{% elsif template_type == 'product' %}
+  <meta name="twitter:title" content="{{ product.title | strip_html }}">
+  <meta name="twitter:description" content="{{ product.description | strip_html | truncate: 200, '' }}">
+  <meta name="twitter:image" content="https:{{ product | img_url: meta_social_image_size }}">
+  <meta name="twitter:image:width" content="1024">
+  <meta name="twitter:image:height" content="1024">
+
+{% comment %}
+  Article
+{% endcomment %}
+{% elsif template_type == 'article' %}
+  <meta name="twitter:title" content="{{ article.title | strip_html }}">
+  <meta name="twitter:description" content="{{ article.excerpt_or_content | strip_html | truncate: 200, '' }}">
+  {% if article.image %}
+    <meta property="twitter:image" content="https:{{ article | img_url: meta_social_image_size }}">
+  {% endif %}
+{% endif %}

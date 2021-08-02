@@ -1,0 +1,125 @@
+{% include 'settings' %}
+
+{%- assign collection = collections[section.settings.collection] %}
+
+{%- assign product_limit = section.settings.products_per_row | times: section.settings.product_rows -%}
+
+{% if section.settings.width == 'width-100' %}
+  {%- assign section_class = 'width-100 body-padding' %}
+{% else %}
+  {%- assign section_class = 'column-max' %}
+{% endif %}
+
+{% comment %}
+  Section
+{% endcomment %}
+{% include 'section-open' section_type: 'collection', class: section_class, show_title: true %}
+
+{% comment %}
+  Products
+{% endcomment %}
+{% include 'products' with collection.products, class: 'row-spacing-150', limit: product_limit, show_add_to_cart_button: section.settings.show_add_to_cart_button, show_compare_at_price: section.settings.show_compare_at_price, show_price: section.settings.show_price, show_sale_sticker: section.settings.show_sale_sticker, show_vendor: section.settings.show_vendor %}
+
+
+{% include 'section-close'  %}
+
+{% comment %}
+  Schema
+{% endcomment %}
+{% schema %}
+{
+  "name": "Featured collection",
+  "class": "index-section section-collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+    },
+    {
+      "id": "width",
+      "type": "select",
+      "label": "Width",
+      "options": [
+        {"value": "column-max", "label": "Content"},
+        {"value": "width-100", "label": "Screen"}
+      ]
+    },
+    {
+      "id": "collection",
+      "type": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products per row",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "product_rows",
+      "label": "Rows",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compare_at_price",
+      "label": "Show compare at price"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add_to_cart_button",
+      "label": "Show add to cart button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_sticker",
+      "label": "Show sale sticker",
+      "info": "Shown when product has 'compare at' price higher than 'price'"
+    },
+    {
+      "type": "color",
+      "id": "bg_details_color",
+      "label": "Details background",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection",
+      "category": "Collection",
+      "settings": {
+        "width": "column-max",
+        "products_per_row": 4,
+        "product_rows": 1,
+        "show_vendor": true,
+        "show_price": true,
+        "show_compare_at_price": true,
+        "show_add_to_cart_button": true,
+        "show_sale_sticker": true
+      }
+    }
+  ]
+}
+{% endschema %}

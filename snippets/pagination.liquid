@@ -1,0 +1,89 @@
+{% comment %}
+  Use the default next object unless a replacement has been passed in
+{% endcomment %}
+{% unless next_obj %}
+  {%- assign next_obj = paginate.next -%}
+{% endunless %}
+
+{% comment %}
+  Use the default previous object unless a replacement has been passed in
+{% endcomment %}
+{% unless prev_obj %}
+  {%- assign prev_obj = paginate.previous -%}
+{% endunless %}
+
+{% comment %}
+  Use the default next url unless a replacement has been passed in
+{% endcomment %}
+{% unless next_url %}
+  {%- assign next_url = paginate.next.url -%}
+{% endunless %}
+
+{% comment %}
+  Use the default previous url unless a replacement has been passed in
+{% endcomment %}
+{% unless prev_url %}
+  {%- assign prev_url = paginate.previous.url -%}
+{% endunless %}
+
+{% comment %}
+  Use the default next text unless a replacement has been passed in
+{% endcomment %}
+{% unless next_text %}
+  {%- assign next_text = 'shopify.pagination.next' | t -%}
+{% endunless %}
+
+{% comment %}
+  Use the default previous text unless a replacement has been passed in
+{% endcomment %}
+{% unless prev_text %}
+  {%- assign prev_text = 'shopify.pagination.previous' | t -%}
+{% endunless %}
+
+{% comment %}
+  Use the default class for the separator unless one has been passed in
+{% endcomment %}
+{% unless separator_class %}
+  {%- assign separator_class = 'lined full margin-top-200 margin-bottom' -%}
+{% endunless %}
+
+{% comment %}
+  If there is more than one page show the pagination
+{% endcomment %}
+{% if paginate.pages > 1 or show_pagination %}
+
+  {% if prev_obj or next_obj %}
+    {% include 'separator' class: separator_class %}
+  {% endif %}
+
+  <div class="pagination row">
+
+    <div class="small-12 medium-4 columns prev">
+      {% if prev_obj %}
+        <a class="text-light" href="{{ prev_url }}">{{ prev_text }}</a>
+      {% endif %}
+    </div>
+
+    <div class="small-12 medium-4 columns pages">
+      {% if paginate.parts.size > 0 %}
+        {% for part in paginate.parts %}
+          {%- assign part_class = 'text-light' -%}
+          {% unless part.is_link %}
+            {%- assign part_class = part_class | append: ' current' -%}
+          {% endunless %}
+          <a class="{{ part_class }}" href="{{ part.url }}">{{ part.title }}</a>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="small-12 medium-4 columns next">
+      {% if next_obj %}
+        <a class="text-light" href="{{ next_url }}">{{ next_text }}</a>
+      {% endif %}
+    </div>
+
+  </div>
+
+{% endif %}
+
+{%- assign separator_class = nil -%}

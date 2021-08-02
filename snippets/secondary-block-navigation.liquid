@@ -1,0 +1,7 @@
+{% include 'settings' %}
+
+{%- assign sb_menu_levels = block.settings.levels | times: 1 -%}
+
+<nav class="nav-side triangle-indicators" data-close-kin="{{ block.settings.close_inactive }}" data-expanded="false" data-node-transition-duration="300">
+  {% include 'menu' with linklists[block.settings.menu], menu_id: 'secondary-block', menu_levels: sb_menu_levels %}
+</nav>

@@ -1,0 +1,84 @@
+{% include 'settings' %}
+
+{%- assign sidebar = false -%}
+
+{% include 'content-open' class:'column-max' %}
+{% include 'page-header' title: page.title %}
+{% include 'separator' %}
+
+<div class="row">
+
+  <div class="large-6 columns">
+    {{ page.content }}
+  </div>
+
+  {% comment %}
+    Separator
+  {% endcomment %}
+  {% include 'separator' class:'margin-top margin-bottom hide-for-large' %}
+
+  <div class="large-5 large-push-1 columns">
+
+    {% comment %}
+      Contact form
+    {% endcomment %}
+    <div id="contact-form">
+
+      {% form 'contact' %}
+
+        {% comment %}
+          Success message
+        {% endcomment %}
+        {% if form.posted_successfully? %}
+          <div class="form-success panel green text-center font-size-15">
+            {{ 'contact.form.posted_successfully' | t }}
+          </div>
+        {% endif %}
+
+        {% comment %}
+          Error message
+        {% endcomment %}
+        {% include 'form-errors' %}
+
+        {% comment %}
+          Name
+        {% endcomment %}
+        <div class="row">
+          {% comment %}<label for="name">{{ 'contact.form.name_field_label' | t }}</label>{% endcomment %}
+          <input type="text" id="name" name="contact[name]" value="{{ form.name }}" placeholder="{{ 'contact.form.name_field_placeholder' | t }}" data-auto-focus>
+          {% include 'field-error-message' field: 'name' %}
+        </div>
+
+        {% comment %}
+          Email
+        {% endcomment %}
+        <div class="row">
+          {% comment %}<label for="email">{{ 'contact.form.email_field_label' | t }}</label>{% endcomment %}
+          <input type="email" id="email" name="contact[email]" value="{{ form.email }}" placeholder="{{ 'contact.form.email_field_placeholder' | t }}">
+          {% include 'field-error-message' field: 'email' %}
+        </div>
+
+        {% comment %}
+          Message
+        {% endcomment %}
+        <div class="row">
+          {% comment %}<label for="message">{{ 'contact.form.message_field_label' | t }}</label>{% endcomment %}
+          <textarea id="message" name="contact[body]" placeholder="{{ 'contact.form.message_field_placeholder' | t }}" rows="6">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+          {% include 'field-error-message' field: 'body' %}
+        </div>
+
+        {% comment %}
+          Submit
+        {% endcomment %}
+        <div class="form-actions margin-top-50 text-right">
+          <button type="submit" class="button">{{ 'contact.form.submit' | t }}</button>
+        </div>
+
+      {% endform %}
+
+    </div>
+
+  </div>
+</div>
+
+{% include 'content-close' %}
