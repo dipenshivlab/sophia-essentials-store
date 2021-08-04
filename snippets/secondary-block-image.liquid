@@ -1,7 +1,0 @@
-{% include 'settings' %}
-
-{% if block.settings.image != blank %}
-  {% include 'image' with block.settings.image, image_link_url: block.settings.image_link_url %}
-{% else %}
-  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-{% endif %}
