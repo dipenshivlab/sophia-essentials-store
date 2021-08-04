@@ -1,0 +1,99 @@
+{% if section.blocks.size < section.settings.images_per_row_large %}
+  {% assign images_per_row_large = section.blocks.size %}
+{% else %}
+  {% assign images_per_row_large = section.settings.images_per_row_large %}
+{% endif %}
+
+{% render 'section-open', section: section, type: 'gallery' %}
+
+  <div class="small-item-grid-1 medium-item-grid-2 large-item-grid-{{ images_per_row_large }}">
+    {% for block in section.blocks %}
+      {% render 'block-open', section: section, block: block, class: 'item' %}
+        {% if block.settings.image != blank %}
+          {% render 'image', image: block.settings.image, image_type: 'gallery', image_link_url: block.settings.image_link_url %}
+        {% else %}
+          {% render 'image', image_placeholder: true %}
+        {% endif %}
+      {% render 'block-close' %}
+    {% endfor %}
+  </div>
+
+{% render 'section-close' %}
+
+
+{% schema %}
+{
+  "name": "Gallery",
+  "class": "index-section section-gallery",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading"
+    },
+    {
+      "id": "width",
+      "type": "select",
+      "label": "Width",
+      "options": [
+        {"value": "column-max", "label": "Content"},
+        {"value": "width-100", "label": "Screen"}
+      ]
+    },
+    {
+      "type": "range",
+      "id": "images_per_row_large",
+      "label": "Images per row on large screens",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Image"
+        },
+        {
+          "id": "image_link_url",
+          "type": "url",
+          "label": "Image link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gallery",
+      "category": "Image",
+      "settings": {
+        "images_per_row_large": 3
+      },
+      "blocks": [
+        {
+          "type": "image",
+          "settings": {
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,9 @@
+{% render 'content-open', class: 'column-max', sidebar: false %}
+
+  {% render 'page-header', title: page.title %}
+
+  {% render 'separator' %}
+
+  {{ page.content }}
+
+{% render 'content-close', sidebar: false %}

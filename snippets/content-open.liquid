@@ -1,0 +1,47 @@
+{% assign cc = class %}
+{% assign pc = 'primary small-12 columns' %}
+{% assign tt = template %}
+
+{% if template contains '.' %}
+  {% assign tp = template | split: '.' %}
+  {% assign tt = tp[0] %}
+{% endif %}
+
+{% unless cc contains 'padding-top' %}
+  {% assign cc = cc | append: ' padding-top' %}
+{% endunless %}
+
+{% unless cc contains 'padding-bottom' %}
+  {% assign cc = cc | append: ' padding-bottom-200' %}
+{% endunless %}
+
+{% unless sidebar == false %}
+  {% unless sidebar %}
+    {% assign settings_show_sidebar = 'sidebar_show_' | append: tt %}
+    {% if settings[settings_show_sidebar] %}
+      {% assign sidebar = true %}
+    {% endif %}
+  {% endunless %}
+{% endunless %}
+
+{% if sidebar %}
+  {% unless cc contains 'column-' %}
+    {% assign cc = cc | append: ' column-max' %}
+  {% endunless %}
+  {% unless sidebar_side %}
+    {% assign sidebar_side = settings.sidebar_side %}
+  {% endunless %}
+  {% assign cc = cc | append: ' has-sidebar sidebar-' %}
+  {% assign cc = cc | append: sidebar_side %}
+  {% assign pc = pc | append: ' medium-8 large-' %}
+  {% assign pc = pc | append: '9' %}
+  {% if sidebar_side == 'left' %}
+    {% assign pc = pc | append: ' float-right-i no-margin-right' %}
+  {% endif %}
+{% endif %}
+
+{% assign class = nil %}
+
+<div id="content-wrap" class="row {{ cc }}">
+  <section class="{{ pc }}">
+    <main role="main">

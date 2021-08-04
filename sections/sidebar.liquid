@@ -1,0 +1,584 @@
+{% render 'section-open', section: section, type: 'sidebar', title: false %}
+
+  {% if section.blocks.size > 0 %}
+    {% for block in section.blocks %}
+      {% render 'block-open', section: section, block: block, class: 'secondary-block font-size-15' %}
+        {% case block.type %}
+          {% when 'separator' %}
+            {% render 'secondary-block-separator', section: section, block: block %}
+          {% when 'text' %}
+            {% render 'secondary-block-text', section: section, block: block %}
+          {% when 'image' %}
+            {% render 'secondary-block-image', section: section, block: block %}
+          {% when 'video' %}
+            {% render 'secondary-block-video', section: section, block: block %}
+          {% when 'blog-posts' %}
+            {% render 'secondary-block-blog-posts', section: section, block: block %}
+          {% when 'blog-tags-list' %}
+            {% render 'secondary-block-blog-tags-list', section: section, block: block %}
+          {% when 'collection' %}
+            {% render 'secondary-block-collection', section: section, block: block %}
+          {% when 'collection-list' %}
+            {% render 'secondary-block-collection-list', section: section, block: block %}
+          {% when 'collection-tags-list' %}
+            {% render 'secondary-block-collection-tags-list', section: section, block: block %}
+          {% when 'navigation' %}
+            {% render 'secondary-block-navigation', section: section, block: block %}
+          {% when 'newsletter' %}
+            {% render 'secondary-block-newsletter', section: section, block: block %}
+          {% when 'page-content' %}
+            {% render 'secondary-block-page-content', section: section, block: block %}
+          {% when 'product' %}
+            {% render 'secondary-block-product', section: section, block: block %}
+          {% when 'search' %}
+            {% render 'secondary-block-search', section: section, block: block %}
+          {% when 'social-icons' %}
+            {% render 'secondary-block-social-icons', section: section, block: block %}
+          {% when 'twitter-timeline' %}
+            {% render 'secondary-block-twitter-timeline', section: section, block: block %}
+          {% when 'html' %}
+            {% render 'secondary-block-html', section: section, block: block %}
+        {% endcase %}
+      {% render 'block-close' %}
+    {% endfor %}
+  {% else %}
+    {% render 'no-blocks' %}
+  {% endif %}
+
+{% render 'section-close' %}
+
+
+{% schema %}
+{
+  "name": "Sidebar",
+  "class": "sidebar-section",
+  "max_blocks": 12,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "separator",
+      "name": "Separator",
+      "settings": [
+        {
+          "type": "select",
+          "id": "margin_top",
+          "label": "Space above",
+          "options": [
+            {"value": "no-margin-top", "label": "None"},
+            {"value": "margin-top-50", "label": "Small"},
+            {"value": "margin-top", "label": "Medium"},
+            {"value": "margin-top-150", "label": "Large"},
+            {"value": "margin-top-200", "label": "Extra large"}
+          ],
+          "default": "margin-top"
+        },
+        {
+          "type": "select",
+          "id": "margin_bottom",
+          "label": "Space below",
+          "options": [
+            {"value": "no-margin-bottom", "label": "None"},
+            {"value": "margin-bottom-50", "label": "Small"},
+            {"value": "margin-bottom", "label": "Medium"},
+            {"value": "margin-bottom-150", "label": "Large"},
+            {"value": "margin-bottom-200", "label": "Extra large"}
+          ],
+          "default": "margin-bottom"
+        },
+        {
+          "type": "header",
+          "content": "Line"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_line",
+          "label": "Show line",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "line_color",
+          "label": "Color"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Width",
+          "options": [
+            {"value": "", "label": "Small"},
+            {"value": "wide", "label": "Medium"},
+            {"value": "x-wide", "label": "Large"},
+            {"value": "full", "label": "Full"}
+          ],
+          "default": "wide"
+        },
+        {
+          "type": "text",
+          "id": "line_thickness",
+          "label": "Thickness (px)",
+          "default": "1"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "About your brand"
+        },
+        {
+          "id": "text",
+          "type": "richtext",
+          "label": "Text",
+          "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+        },
+        {
+          "id": "color",
+          "type": "color",
+          "label": "Color"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        },
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Image"
+        },
+        {
+          "id": "image_link_url",
+          "type": "url",
+          "label": "Image link URL"
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "URL",
+          "accept": ["youtube", "vimeo"],
+          "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+        },
+        {
+          "id": "video_width",
+          "type": "text",
+          "label": "Width (px)"
+        },
+        {
+          "id": "video_height",
+          "type": "text",
+          "label": "Height (px)"
+        },
+        {
+          "type": "checkbox",
+          "id": "make_responsive",
+          "label": "Make responsive",
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "Blog posts",
+      "type": "blog-posts",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Blog"
+        },
+        {
+          "id": "blog",
+          "type": "blog",
+          "label": "Blog"
+        },
+        {
+          "type": "range",
+          "id": "article_limit",
+          "label": "Number of posts",
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "default": 2
+        },
+        {
+          "type": "checkbox",
+          "id": "show_image",
+          "label": "Show image",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_author",
+          "label": "Show author",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_publish_date",
+          "label": "Show publish date",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_comment_count",
+          "label": "Show comment count",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "blog-tags-list",
+      "name": "Blog tags list",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Blog tags"
+        },
+        {
+          "type": "blog",
+          "id": "blog",
+          "label": "Blog"
+        },
+        {
+          "id": "exclude_tags",
+          "type": "textarea",
+          "label": "Exclude tags",
+          "info": "Type in the list of tags to omit from the list. Names must match the tags exactly and be separated by commas."
+        }
+      ]
+    },
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Featured collection"
+        },
+        {
+          "id": "collection",
+          "type": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "range",
+          "id": "product_limit",
+          "label": "Number of products",
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "default": 3
+        },
+        {
+          "type": "header",
+          "content": "Products"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_vendor",
+          "label": "Show vendor",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_price",
+          "label": "Show price",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_compare_at_price",
+          "label": "Show compare at price",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_add_to_cart_button",
+          "label": "Show add to cart button",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sale_sticker",
+          "label": "Show sale sticker",
+          "info": "Shown when product has 'compare at' price higher than 'price'",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "collection-list",
+      "name": "Collection list",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Collections"
+        },
+        {
+          "type": "textarea",
+          "id": "exclude",
+          "label": "Exclude collections",
+          "info": "Type in the [handles](https://help.shopify.com/themes/liquid/basics/handle) for the collections you'd like to exclude from the list. Separate handles with a comma and a space e.g. collection-one, collection-two"
+        }
+      ]
+    },
+    {
+      "type": "collection-tags-list",
+      "name": "Collection tags list",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Collection tags"
+        },
+        {
+          "id": "exclude_tags",
+          "type": "textarea",
+          "label": "Exclude tags",
+          "info": "Type in the list of tags to omit from the list. Names must match the tags exactly and be separated by commas."
+        }
+      ]
+    },
+    {
+      "type": "navigation",
+      "name": "Navigation",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Links"
+        },
+        {
+          "id": "menu",
+          "type": "link_list",
+          "label": "Menu",
+          "default": "main-menu"
+        },
+        {
+          "id": "levels",
+          "type": "select",
+          "label": "Number of levels",
+          "options": [
+            {"value": "1", "label": "1"},
+            {"value": "2", "label": "2"},
+            {"value": "3", "label": "3"}
+          ],
+          "default": "1"
+        },
+        {
+          "type": "checkbox",
+          "id": "close_inactive",
+          "label": "Auto-close inactive submenus"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Newsletter"
+        },
+        {
+          "id": "signup_message",
+          "type": "richtext",
+          "label": "Subheading",
+          "default": "<p>Enter your email address below to join our mailing list and have our latest news and member-only deals delivered straight to your inbox.</p>"
+        },
+        {
+          "type": "paragraph",
+          "content": "Any customers who sign up will have an account created for them in Shopify. [View customers](/admin/customers?query=&accepts_marketing=1)"
+        }
+      ]
+    },
+    {
+      "type": "page-content",
+      "name": "Page content",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Page"
+        },
+        {
+          "id": "page",
+          "type": "page",
+          "label": "Page"
+        }
+      ]
+    },
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Featured product"
+        },
+        {
+          "id": "product",
+          "type": "product",
+          "label": "Product"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_vendor",
+          "label": "Show vendor",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_price",
+          "label": "Show price",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_compare_at_price",
+          "label": "Show compare at price",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_add_to_cart_button",
+          "label": "Show add to cart button",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_sale_sticker",
+          "label": "Show sale sticker",
+          "info": "Shown when product has 'compare at' price higher than 'price'",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "search",
+      "name": "Search",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        }
+      ]
+    },
+    {
+      "type": "social-icons",
+      "name": "Social icons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        },
+        {
+          "type": "range",
+          "id": "icon_size",
+          "label": "Icon size",
+          "min": 14,
+          "max": 50,
+          "step": 2,
+          "unit": "px",
+          "default": 24
+        }
+      ]
+    },
+    {
+      "type": "twitter-timeline",
+      "name": "Twitter timeline",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "options": [
+            {"value": "light", "label": "Light"},
+            {"value": "dark", "label": "Dark"}
+          ],
+          "default": "light"
+        },
+        {
+          "type": "range",
+          "id": "height",
+          "label": "Height",
+          "min": 100,
+          "max": 1000,
+          "step": 100,
+          "unit": "px",
+          "default": 500
+        },
+        {
+          "type": "color",
+          "id": "link_color",
+          "label": "Link color",
+          "default": "#2B7BB9"
+        }
+      ]
+    },
+    {
+      "type": "html",
+      "name": "Custom HTML",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Custom HTML"
+        },
+        {
+          "id": "html",
+          "type": "html",
+          "label": "HTML",
+          "default": "<p>Use HTML to format your text so it can be easily read. This text can be used to share information about your brand with customers.</p>"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

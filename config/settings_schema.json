@@ -1,0 +1,597 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Providence",
+    "theme_author": "Skup",
+    "theme_version": "5.11.10",
+    "theme_documentation_url": "https:\/\/skup.net\/providence-support",
+    "theme_support_url": "https:\/\/skup.net\/providence-support"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "ANNOUNCEMENT BAR"
+      },
+      {
+        "type": "color",
+        "id": "bg_announcement_bar_color",
+        "label": "Background"
+      },
+      {
+        "type": "color",
+        "id": "color_announcement_bar_text",
+        "label": "Text"
+      },
+      {
+        "type": "header",
+        "content": "UPPER HEADER"
+      },
+      {
+        "type": "color",
+        "id": "bg_top_bar_color",
+        "label": "Background"
+      },
+      {
+        "type": "color",
+        "id": "color_brand_link",
+        "label": "Logo text"
+      },
+      {
+        "type": "color",
+        "id": "color_top_bar_text",
+        "label": "Text"
+      },
+      {
+        "type": "color",
+        "id": "color_top_bar_link",
+        "label": "Link"
+      },
+      {
+        "type": "color",
+        "id": "color_top_bar_link_hover",
+        "label": "Link hover"
+      },
+      {
+        "type": "header",
+        "content": "LOWER HEADER"
+      },
+      {
+        "type": "color",
+        "id": "bg_header_color",
+        "label": "Background"
+      },
+      {
+        "type": "color",
+        "id": "color_header_text",
+        "label": "Text"
+      },
+      {
+        "type": "color",
+        "id": "color_main_menu_link",
+        "label": "Menu links"
+      },
+      {
+        "type": "color",
+        "id": "color_main_menu_link_hover",
+        "label": "Menu links hover"
+      },
+      {
+        "type": "color",
+        "id": "color_header_line",
+        "label": "Lines"
+      },
+      {
+        "type": "header",
+        "content": "MAIN CONTENT"
+      },
+      {
+        "type": "color",
+        "id": "bg_content_color",
+        "label": "Background"
+      },
+      {
+        "type": "color",
+        "id": "color_content_heading",
+        "label": "Headings"
+      },
+      {
+        "type": "color",
+        "id": "color_content_text",
+        "label": "Text"
+      },
+      {
+        "type": "color",
+        "id": "color_content_text_light",
+        "label": "Text light"
+      },
+      {
+        "type": "color",
+        "id": "color_content_link",
+        "label": "Link"
+      },
+      {
+        "type": "color",
+        "id": "color_content_link_hover",
+        "label": "Link hover"
+      },
+      {
+        "type": "color",
+        "id": "color_content_line",
+        "label": "Lines"
+      },
+      {
+        "type": "header",
+        "content": "UPPER FOOTER"
+      },
+      {
+        "type": "color",
+        "id": "bg_footer_content_color",
+        "label": "Background"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_content_heading",
+        "label": "Headings"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_content_text",
+        "label": "Text"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_content_text_light",
+        "label": "Text light"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_content_link",
+        "label": "Link"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_content_link_hover",
+        "label": "Link hover"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_content_line",
+        "label": "Lines"
+      },
+      {
+        "type": "header",
+        "content": "LOWER FOOTER"
+      },
+      {
+        "type": "color",
+        "id": "bg_footer_color",
+        "label": "Background"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_text",
+        "label": "Text"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_link",
+        "label": "Link"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_link_hover",
+        "label": "Link hover"
+      },
+      {
+        "type": "header",
+        "content": "BUTTONS"
+      },
+      {
+        "type": "color",
+        "id": "bg_content_button",
+        "label": "Background"
+      },
+      {
+        "type": "color",
+        "id": "color_content_button_text",
+        "label": "Text"
+      },
+      {
+        "type": "color",
+        "id": "bg_content_button_hover",
+        "label": "Hover background"
+      },
+      {
+        "type": "color",
+        "id": "color_content_button_text_hover",
+        "label": "Hover text"
+      },
+      {
+        "type": "header",
+        "content": "SALE STICKER"
+      },
+      {
+        "type": "color",
+        "id": "bg_sale_sticker_color",
+        "label": "Background"
+      },
+      {
+        "type": "color",
+        "id": "color_sale_sticker",
+        "label": "Text"
+      },
+      {
+        "type": "header",
+        "content": "STICKY CART"
+      },
+      {
+        "type": "color",
+        "id": "sticky_cart_background",
+        "label": "Background"
+      },
+      {
+        "type": "color",
+        "id": "sticky_cart_text",
+        "label": "Text"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Logo"
+      },
+      {
+        "type": "font_picker",
+        "id": "typo_brand_font",
+        "label": "Base font",
+        "default": "tenor_sans_n4"
+      },
+      {
+        "type": "range",
+        "id": "typo_brand_font_size",
+        "label": "Size",
+        "min": 12,
+        "max": 36,
+        "step": 1,
+        "unit": "px",
+        "default": 24
+      },
+      {
+        "type": "header",
+        "content": "Main menu"
+      },
+      {
+        "type": "font_picker",
+        "id": "typo_main_menu_font",
+        "label": "Base font",
+        "default": "neuzeit_s_n4"
+      },
+      {
+        "type": "range",
+        "id": "typo_main_menu_font_size",
+        "label": "Size",
+        "min": 12,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "default": 14
+      },
+      {
+        "type": "header",
+        "content": "Mega menu"
+      },
+      {
+        "type": "range",
+        "id": "typo_main_menu_dropdown_font_size",
+        "label": "Size",
+        "min": 12,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "default": 14
+      },
+      {
+        "type": "header",
+        "content": "Main content"
+      },
+      {
+        "type": "font_picker",
+        "id": "typo_primary_font",
+        "label": "Base font",
+        "default": "neuzeit_s_n4"
+      },
+      {
+        "type": "range",
+        "id": "typo_primary_font_size",
+        "label": "Size",
+        "min": 12,
+        "max": 18,
+        "step": 1,
+        "unit": "px",
+        "default": 14
+      },
+      {
+        "type": "select",
+        "id": "typo_primary_line_height",
+        "label": "Line height",
+        "options": [
+          {
+            "value": "1",
+            "label": "Extra small"
+          },
+          {
+            "value": "1.25",
+            "label": "Small"
+          },
+          {
+            "value": "1.5",
+            "label": "Medium"
+          },
+          {
+            "value": "1.75",
+            "label": "Large"
+          },
+          {
+            "value": "2",
+            "label": "Extra large"
+          }
+        ],
+        "default": "1.5"
+      },
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "font_picker",
+        "id": "typo_heading_font",
+        "label": "Base font",
+        "default": "tenor_sans_n4"
+      }
+    ]
+  },
+  {
+    "name": "Sidebar",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Position"
+      },
+      {
+        "type": "select",
+        "id": "sidebar_side",
+        "label": "Default side",
+        "info": "Can be overridden with page templates",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "sidebar_enable_sticky",
+        "label": "Enable sticky sidebar"
+      },
+      {
+        "type": "header",
+        "content": "Locations"
+      },
+      {
+        "type": "paragraph",
+        "content": "The sidebar can be enabled for various areas of your shop. Select which locations you'd like it to appear in from the list below."
+      },
+      {
+        "type": "checkbox",
+        "id": "sidebar_show_index",
+        "label": "Home page"
+      },
+      {
+        "type": "checkbox",
+        "id": "sidebar_show_page",
+        "label": "Standard pages"
+      },
+      {
+        "type": "checkbox",
+        "id": "sidebar_show_product",
+        "label": "Product pages"
+      },
+      {
+        "type": "checkbox",
+        "id": "sidebar_show_collection",
+        "label": "Collection pages"
+      },
+      {
+        "type": "checkbox",
+        "id": "sidebar_show_blog",
+        "label": "Blog page"
+      },
+      {
+        "type": "checkbox",
+        "id": "sidebar_show_article",
+        "label": "Blog articles"
+      }
+    ]
+  },
+  {
+    "name": "Search",
+    "settings": [
+      {
+        "label": "Enable search suggestions",
+        "id": "search_enable_suggestions",
+        "type": "checkbox",
+        "default": true
+      },
+      {
+        "label": "Show vendor",
+        "id": "search_show_vendor",
+        "type": "checkbox",
+        "default": false
+      },
+      {
+        "label": "Show price",
+        "id": "search_show_price",
+        "type": "checkbox",
+        "default": false
+      },
+      {
+        "label": " Show sold out products",
+        "id": "search_unavailable_products",
+        "type": "checkbox",
+        "default": false
+      },
+      {
+        "label": "Go to search page when enter key is pressed",
+        "id": "search_enter_submit",
+        "type": "checkbox",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Cart page",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart type",
+        "options": [
+          {
+            "value": "default",
+            "label": "Page"
+          },
+          {
+            "value": "notification",
+            "label": "Notification"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook",
+        "info": "https:\/\/facebook.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter",
+        "info": "https:\/\/twitter.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "Pinterest",
+        "info": "https:\/\/pinterest.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram",
+        "info": "http:\/\/instagram.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr_link",
+        "label": "Tumblr",
+        "info": "http:\/\/shopify.tumblr.com"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat_link",
+        "label": "Snapchat",
+        "info": "https:\/\/www.snapchat.com\/add\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "Youtube",
+        "info": "https:\/\/www.youtube.com\/user\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_link",
+        "label": "Vimeo",
+        "info": "https:\/\/vimeo.com\/shopify"
+      },
+      {
+        "type": "header",
+        "content": "Sharing buttons"
+      },
+      {
+        "type": "checkbox",
+        "id": "share_facebook",
+        "label": "Facebook"
+      },
+      {
+        "type": "checkbox",
+        "id": "share_twitter",
+        "label": "Twitter"
+      },
+      {
+        "type": "checkbox",
+        "id": "share_pinterest",
+        "label": "Pinterest",
+        "info": "Products only"
+      },
+      {
+        "type": "header",
+        "content": "Twitter feed"
+      },
+      {
+        "type": "select",
+        "id": "social_twitter_feed_style",
+        "label": "Style",
+        "options": [
+          {
+            "value": "light",
+            "label": "Light"
+          },
+          {
+            "value": "dark",
+            "label": "Dark"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "social_twitter_feed_limit",
+        "label": "Number of tweets to show",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "default": 4
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  }
+]

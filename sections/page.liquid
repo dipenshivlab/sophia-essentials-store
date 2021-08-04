@@ -1,0 +1,104 @@
+{%- assign page = pages[section.settings.page] -%}
+
+{%- liquid
+  if section.settings.title != blank
+    assign title = section.settings.title
+  elsif page.title != blank
+    assign title = page.title
+  else
+    assign title = 'onboarding.page_title' | t
+  endif
+
+  assign title_align = section.settings.title_align
+  assign title_class = 'text-' | append: title_align
+  assign content_align = section.settings.content_align
+-%}
+
+{% render 'section-open', section: section, type: 'rich-text', title: title, title_class: title_class %}
+
+  <div class="rte text-{{content_align}}">
+    {%- unless page.content == blank -%}
+      {{ page.content }}
+    {%- else -%}
+      <div class='page-placeholder-wrapper'>
+        {{ 'page' | placeholder_svg_tag: 'page-placeholder placeholder-svg' }}
+      </div>
+    {%- endunless -%}
+  </div>
+
+{% render 'section-close' %}
+
+{% schema %}
+  {
+    "name": "Page",
+    "class": "section-page",
+    "settings": [
+      {
+        "type": "page",
+        "id": "page",
+        "label": "Page"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "id": "width",
+        "type": "select",
+        "label": "Width",
+        "options": [
+          {"value": "column-max", "label": "Content"},
+          {"value": "width-100", "label": "Screen"}
+        ],
+        "default": "column-max"
+      },
+      {
+        "type": "select",
+        "id": "title_align",
+        "label": "Heading alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "center"
+      },
+      {
+        "type": "select",
+        "id": "content_align",
+        "label": "Content alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "left"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Page",
+        "category": "Text"
+      }
+    ]
+  }
+{% endschema %}

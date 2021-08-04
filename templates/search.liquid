@@ -1,0 +1,134 @@
+{% assign date_format = '%B %d, %Y' %}
+
+{% assign title = 'shopify.page_titles.search' | t %}
+
+{% if search.performed == false or search.results_count == 0 %}
+  {% render 'content-open', class: 'column-max padding-top-300 padding-bottom-300' %}
+{% else %}
+  {% render 'content-open', class: 'column-max' %}
+{% endif %}
+
+  {% render 'page-header', class: 'text-center', title: title %}
+
+  {% render 'separator' %}
+
+  <div class="column-extra-narrow">
+    <form class="search" name="search" action="{{ routes.search_url }}" method="get" role="search">
+      <input class="search-text text-center" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.input_placeholder' | t }}" autocomplete="off" data-auto-focus>
+    </form>
+  </div>
+
+  {% if search.performed == true %}
+
+    {% if search.results_count == 0 %}
+      {% render 'separator', class: 'lined margin-top margin-bottom' %}
+    {% else %}
+      {% render 'separator' %}
+    {% endif %}
+
+    <div class="text-center">
+      {{ 'general.search.results' | t: count: search.results_count, query: search.terms }}
+    </div>
+
+    {% if search.results_count > 0 %}
+      {% render 'separator', class: 'lined margin-top margin-bottom' %}
+    {% endif %}
+
+  {% endif %}
+
+  {% if search.performed %}
+    <div class="search-results column-narrow">
+      {% paginate search.results by 30 %}
+
+        {% for result in search.results %}
+
+          <div class="table search-result search-result-{{ result.object_type }}">
+
+            {% if result.object_type == 'product' %}
+              {% assign result_image = result.featured_media %}
+            {% else %}
+              {% assign result_image = result.image %}
+            {% endif %}
+
+            {% if result_image %}
+              {% assign image_alt = result.title | escape %}
+              <div class="cell image align-top text-center text-left-medium">
+                {% render 'image', image: result_image, image_alt: image_alt, image_widths: '100, 200, 600', image_link_url: result.url %}
+              </div>
+            {% endif %}
+
+            <div class="cell content align-top">
+
+              <div class="result-header table">
+
+                <div class="cell">
+                  <a class="result-title text-color font-size-18" href="{{ result.url }}">{{ result.title }}</a>
+                  <div class="result-url text-light font-size-14">
+                    {{ result.object_type | capitalize }}
+                  </div>
+                </div>
+
+                {% if result.object_type == 'product' %}
+                  <div class="pricing cell text-right-medium font-size-16">
+                    {% assign product = result %}
+                    {% assign compare_at_class = 'price compare-at text-light font-size-14 fw-300 lht inline-block' %}
+                    {% assign from_class = 'from text-light font-size-14' %}
+                    {% assign price_class = 'price sell-price font-size-14 fw-600 lht inline-block' %}
+                    {% assign unit_price_class = 'price unit-price text-light font-size-12 lht inline-block' %}
+                    {% assign unit_price_separator_class = 'unit-price-separator text-light font-size-12 lht inline-block' %}
+                    {% assign unit_price_base_unit_class = 'unit-price-base-unit text-light font-size-12 lht inline-block' %}
+                    {% assign on_sale = false %}
+                    {% assign price = product.price %}
+                    {% assign price_varies = product.price_varies %}
+                    {% assign compare_at_price = product.compare_at_price %}
+                    {% assign cheapest_variant = product.variants | sort: 'price' | first %}
+                    {% assign unit_price = cheapest_variant.unit_price %}
+                    {% assign unit_price_measurement = cheapest_variant.unit_price_measurement %}
+                    {% if product.compare_at_price > product.price %}
+                      {% assign on_sale = true %}
+                    {% endif %}
+                    {% unless price_varies %}
+                      {% assign from_class = from_class | append: ' hidden' %}
+                    {% endunless %}
+                    {% unless unit_price and unit_price_measurement %}
+                      {% assign unit_price_class = unit_price_class | append: ' hidden' %}
+                      {% assign unit_price_separator_class = unit_price_separator_class | append: ' hidden' %}
+                      {% assign unit_price_base_unit_class = unit_price_base_unit_class | append: ' hidden' %}
+                    {% endunless %}
+                    {% unless on_sale %}
+                      {% assign compare_at_class = compare_at_class | append: ' hidden' %}
+                    {% endunless %}
+                    {% render 'pricing', show_from: true, from_class: from_class, price: price, price_class: price_class, show_compare_at_price: true, compare_at_price: compare_at_price, compare_at_class: compare_at_class, show_unit_price: false, unit_price: unit_price, unit_price_class: unit_price_class %}
+                  </div>
+                {% endif %}
+
+              </div>
+
+              <div class="result-body font-size-14 margin-top-50">
+                {% if result.object_type == 'article' and result.published_at %}{{ result.published_at | date: date_format }} &#8212; {% endif %}
+                {{ result.content | strip_html | truncatewords: 30 | highlight: search.terms }}
+              </div>
+
+              {% if result.object_type == 'product' %}
+                <div class="actions margin-top-50">
+                  <a class="button small" href="{{ result.url }}">{{ 'general.search.view_product' | t }}</a>
+                </div>
+              {% endif %}
+
+            </div>
+
+          </div>
+
+          {% unless forloop.last %}
+            {% render 'separator', class: 'lined full margin-top margin-bottom' %}
+          {% endunless %}
+
+        {% endfor %}
+
+        {% render 'pagination', paginate: paginate %}
+
+      {% endpaginate %}
+    </div>
+  {% endif %}
+
+{% render 'content-close' %}

@@ -1,0 +1,37 @@
+{% assign sc = 'secondary small-12 columns' %}
+{% assign tt = template %}
+
+{% if template contains '.' %}
+  {% assign tp = template | split: '.' %}
+  {% assign tt = tp[0] %}
+{% endif %}
+
+{% unless sidebar == false %}
+  {% unless sidebar %}
+    {% assign settings_show_sidebar = 'sidebar_show_' | append: tt %}
+    {% if settings[settings_show_sidebar] %}
+      {% assign sidebar = true %}
+    {% endif %}
+  {% endunless %}
+{% endunless %}
+
+{% if sidebar %}
+  {% unless sidebar_side %}
+    {% assign sidebar_side = settings.sidebar_side %}
+  {% endunless %}
+  {% assign sc = sc | append: ' medium-4 large-3 margin-top-200' %}
+  {% if settings.sidebar_enable_sticky %}
+    {% assign sc = sc | append: ' sticky-sidebar' %}
+  {% endif %}
+{% endif %}
+
+    </main>
+  </section>
+
+  {% if sidebar %}
+    {% render 'sidebar', class: sc, sidebar: sidebar %}
+  {% endif %}
+
+</div>
+
+{% assign class = nil %}

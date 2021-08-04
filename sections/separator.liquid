@@ -1,0 +1,109 @@
+{% render 'section-open', section: section, type: 'separator', title: false %}
+
+  <style>
+    #shopify-section-{{ section.id }} .separator {
+      {% if section.settings.line_color %}
+        border-bottom-color: {{ section.settings.line_color }};
+      {% endif %}
+      border-bottom-width: {{ section.settings.line_thickness | escape }};
+    }
+  </style>
+
+  {% assign class = class | append: ' ' | append: section.settings.margin_top %}
+  {% assign class = class | append: ' ' | append: section.settings.margin_bottom %}
+
+  {% if section.settings.show_line %}
+    {% assign class = class | append: ' lined' %}
+  {% endif %}
+
+  <div class="separator {{ class }} {{ section.settings.width }}" aria-hidden="true"></div>
+
+  {% assign class = nil %}
+
+{% render 'section-close' %}
+
+
+{% schema %}
+{
+  "name": "Separator",
+  "class": "index-section section-separator",
+  "settings": [
+    {
+      "type": "select",
+      "id": "margin_top",
+      "label": "Space above",
+      "options": [
+        {"value": "no-margin-top", "label": "None"},
+        {"value": "margin-top-50", "label": "Small"},
+        {"value": "margin-top", "label": "Medium"},
+        {"value": "margin-top-150", "label": "Large"},
+        {"value": "margin-top-200", "label": "Extra large"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "margin_bottom",
+      "label": "Space below",
+      "options": [
+        {"value": "no-margin-bottom", "label": "None"},
+        {"value": "margin-bottom-50", "label": "Small"},
+        {"value": "margin-bottom", "label": "Medium"},
+        {"value": "margin-bottom-150", "label": "Large"},
+        {"value": "margin-bottom-200", "label": "Extra large"}
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Line"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line",
+      "label": "Show line"
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Color"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "options": [
+        {"value": "", "label": "Small"},
+        {"value": "wide", "label": "Medium"},
+        {"value": "x-wide", "label": "Large"},
+        {"value": "full", "label": "Full"}
+      ]
+    },
+    {
+      "type": "select",
+      "id": "line_thickness",
+      "label": "Thickness",
+      "options": [
+        {"value": "1px", "label": "Extra small"},
+        {"value": "2px", "label": "Small"},
+        {"value": "4px", "label": "Medium"},
+        {"value": "6px", "label": "Large"},
+        {"value": "10px", "label": "Extra large"}
+      ],
+      "default": "1px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Separator",
+      "category": "Layout",
+      "settings": {
+        "margin_top": "margin-top",
+        "margin_bottom": "margin-bottom",
+        "show_line": true,
+        "line_color": "#565656",
+        "width": "wide",
+        "line_thickness": "1px"
+      }
+    }
+  ]
+}
+{% endschema %}
