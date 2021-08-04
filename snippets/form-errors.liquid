@@ -1,9 +1,0 @@
-{% unless form_errors_class %}
-  {%- assign form_errors_class = 'panel red text-center font-size-15' -%}
-{% endunless %}
-
-{% if form.errors %}
-  <div class="{{ form_errors_class }}">
-    {{ form.errors | default_errors }}
-  </div>
-{% endif %}
