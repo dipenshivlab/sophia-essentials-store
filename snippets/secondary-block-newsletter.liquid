@@ -1,0 +1,44 @@
+{% include 'settings' %}
+
+{% comment %}
+  Signup message
+{% endcomment %}
+<div class="margin-bottom">
+  {{ block.settings.signup_message }}
+</div>
+
+{% comment %}
+  Form
+{% endcomment %}
+{% form 'customer' %}
+
+  {% comment %}
+    Error message
+  {% endcomment %}
+  {% include 'form-errors' %}
+
+  {% if form.posted_successfully? %}
+
+    {% comment %}
+      Success message
+    {% endcomment %}
+    <div class="form-success panel green text-center font-size-14">
+      {{ 'newsletter.success_message' | t }}
+    </div>
+
+  {% else %}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+
+    <div class="table">
+      <div class="cell">
+        {% comment %}<label for="email">{{ 'newsletter.email_field_label' | t }}</label>{% endcomment %}
+        <input type="email" name="contact[email]" value="{{ form.email }}" placeholder="{{ 'newsletter.email_field_placeholder' | t }}">
+      </div>
+      <div class="cell">
+        <button type="submit" class="button">{{ 'newsletter.submit' | t }}</button>
+      </div>
+    </div>
+
+  {% endif %}
+
+{% endform %}

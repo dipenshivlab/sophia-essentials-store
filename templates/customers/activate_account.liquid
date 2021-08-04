@@ -1,0 +1,46 @@
+{% include 'settings' %}
+{% include 'content-open' class:'column-max' %}
+
+<div class="column-extra-narrow">
+
+  {% include 'page-header' class:'text-center' %}
+
+  <p class="message text-center text-light margin-top">{{ 'customer.activate_account.message_html' | t }}</p>
+
+  {% form 'activate_customer_password' %}
+
+    {% include 'form-errors' %}
+
+    {% comment %}
+      Password
+    {% endcomment %}
+    <div class="row">
+      {% comment %}<label for="password">{{ 'customer.activate_account.password_field_label' | t }}</label>{% endcomment %}
+      <input type="password" id="password" name="customer[password]" value="{{ form.password }}" placeholder="{{ 'customer.activate_account.password_field_placeholder' | t }}">
+      {% include 'field-error-message' field: 'password' %}
+    </div>
+
+    {% comment %}
+      Password confirmation
+    {% endcomment %}
+    <div class="row">
+      {% comment %}<label for="password_confirmation">{{ 'customer.activate_account.password_confirmation_field_label' | t }}</label>{% endcomment %}
+      <input type="password" id="password_confirmation" name="customer[password_confirmation]" value="{{ form.password_confirmation }}" placeholder="{{ 'customer.activate_account.password_confirmation_field_placeholder' | t }}">
+      {% include 'field-error-message' field: 'password_confirmation' %}
+    </div>
+
+    {% comment %}
+      Submit
+    {% endcomment %}
+    <div class="form-actions text-center width-100">
+      <p class="no-margin-bottom">
+        <input class="button" type="submit" value="{{ 'customer.activate_account.submit' | t }}">
+        <input class="button" type="submit" name="decline" value="{{ 'customer.activate_account.cancel' | t }}">
+      </p>
+    </div>
+
+  {% endform  %}
+
+</div>
+
+{% include 'content-close' %}

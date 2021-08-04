@@ -1,0 +1,10 @@
+{% include 'settings' %}
+
+{%- assign sidebar = true -%}
+{%- assign sidebar_side = 'right' -%}
+
+{% include 'content-open' class: 'column-max' %}
+{% include 'page-header' title: page.title %}
+{% include 'separator' %}
+{{ page.content }}
+{% include 'content-close' %}

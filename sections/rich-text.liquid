@@ -1,0 +1,146 @@
+{% include 'settings' %}
+
+{% comment %}
+  Section
+{% endcomment %}
+{% include 'section-open' section_type: 'rich-text', show_title: true %}
+
+{% comment %}
+  Blocks
+{% endcomment %}
+{% if section.blocks.size > 0 %}
+  {% for block in section.blocks %}
+    {% include 'block-open' %}
+
+    {% comment %}
+      CSS
+    {% endcomment %}
+    <style>
+      #{{ block_id }} .section-block-header-heading,
+      #{{ block_id }} .rte {
+        {% if block.settings.color %}
+          color: {{ block.settings.color }};
+        {% endif %}
+
+        text-align: {{ block.settings.alignment }};
+      }
+
+    </style>
+
+    {% comment %}
+      Text block
+    {% endcomment %}
+    {% if block.type == 'text' %}
+
+      <span class="rte">
+        {{ block.settings.text }}
+      </span>
+
+    {% comment %}
+      Page block
+    {% endcomment %}
+    {% elsif block.type == 'page' %}
+      {%- assign block_page = pages[block.settings.page] -%}
+
+      {% if block_page != empty %}
+        <span class="rte">
+          {{ block_page.content }}
+        </span>
+      {% else %}
+        <div class="no-content">
+          <p class="no-margin">{{ 'onboarding.select_page' | t }}</p>
+        </div>
+      {% endif %}
+
+    {% endif %}
+
+    {% include 'block-close' %}
+
+    {% unless forloop.last %}
+      {% include 'separator' class: 'margin-top-50 margin-bottom' %}
+    {% endunless %}
+
+  {% endfor %}
+{% else %}
+  {% include 'no-blocks' %}
+{% endif %}
+
+{% include 'section-close'  %}
+
+{% comment %}
+  Schema
+{% endcomment %}
+{% schema %}
+{
+  "name": "Rich text",
+  "class": "index-section section-rich-text",
+  "max_blocks": 2,
+  "settings": [
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Heading",
+          "default": "Talk about your brand"
+        },
+        {
+          "id": "text",
+          "type": "richtext",
+          "label": "Text",
+          "default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+        },
+        {
+          "id": "alignment",
+          "type": "select",
+          "label": "Alignment",
+          "options": [
+            {"value": "left", "label": "Left"},
+            {"value": "center", "label": "Center"},
+            {"value": "right", "label": "Right"}
+          ],
+          "default": "left"
+        },
+        {
+          "id": "color",
+          "type": "color",
+          "label": "Color"
+        }
+      ]
+    },
+    {
+      "type": "page",
+      "name": "Page",
+      "settings": [
+        {
+          "id": "title",
+          "type": "text",
+          "label": "Heading"
+        },
+        {
+          "id": "page",
+          "type": "page",
+          "label": "Page content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich text",
+      "category": "Text",
+      "settings": {
+      },
+      "blocks": [
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

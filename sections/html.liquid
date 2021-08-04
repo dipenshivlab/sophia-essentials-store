@@ -1,0 +1,38 @@
+{% include 'settings' %}
+
+{% comment %}
+  Section
+{% endcomment %}
+{% include 'section-open' section_type: 'html', show_title: true %}
+{{ section.settings.html }}
+{% include 'section-close'  %}
+
+{% comment %}
+  Schema
+{% endcomment %}
+{% schema %}
+{
+  "name": "Custom HTML",
+  "class": "index-section section-custom-html",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Talk about your brand"
+    },
+    {
+      "id": "html",
+      "type": "html",
+      "label": "HTML",
+      "default": "<p>Use HTML to format your text so it can be easily read. This text can be used to share information about your brand with customers.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom HTML",
+      "category": "Advanced"
+    }
+  ]
+}
+{% endschema %}

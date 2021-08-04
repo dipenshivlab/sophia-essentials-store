@@ -1,0 +1,14 @@
+{% include 'settings' %}
+{% include 'content-open' class: 'column-max' %}
+{% include 'page-header' title: page.title %}
+{% include 'separator' %}
+<div class="small-item-grid-1 medium-item-grid-2 large-item-grid-2 row-spacing-150">
+  <div class="page-image item">
+  	{% section 'page-image-three' %}
+  </div>
+  <div class="page-content item">
+    {{ page.content }}
+  </div>
+</div>
+
+{% include 'content-close' %}

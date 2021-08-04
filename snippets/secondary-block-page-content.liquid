@@ -1,0 +1,13 @@
+{% include 'settings' %}
+
+{%- assign sb_page = pages[block.settings.page] -%}
+
+{% if sb_page != empty %}
+  <span class="rte">
+    {{ sb_page.content }}
+  </span>
+{% else %}
+  <div class="no-content">
+    <p class="no-margin">{{ 'onboarding.select_page' | t }}</p>
+  </div>
+{% endif %}
