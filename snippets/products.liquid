@@ -1,7 +1,11 @@
-{% assign product_class = 'item collection-product' %}
+{% comment %}
+  Additional variable assignments can be found in the set-product-vars.liquid and settings.liquid snippets
+{% endcomment %}
+
+{%- assign product_class = 'item collection-product' -%}
 
 {% if section.settings.products_per_row %}
-  {% assign per_row_large = section.settings.products_per_row %}
+  {%- assign collection_products_per_row_large = section.settings.products_per_row -%}
   {% assign per_row_medium = per_row_large | at_most: 3 %}
   {% assign per_row_small = per_row_large | at_most: 2 %}
 {% else %}
@@ -10,10 +14,30 @@
   {% assign per_row_small = 2 %}
 {% endif %}
 
+{% if per_row_small %}
+  {%- assign collection_products_per_row_small = per_row_small -%}
+{% endif %}
+
+{% if per_row_medium %}
+  {%- assign collection_products_per_row_medium = per_row_medium -%}
+{% endif %}
+
+{% if per_row_large %}
+  {%- assign collection_products_per_row_large = per_row_large -%}
+{% endif %}
+
+{% comment %}
+  Products
+{% endcomment %}
 <div class="collection-products">
-  <div class="small-item-grid-{{ per_row_small }} medium-item-grid-{{ per_row_medium }} large-item-grid-{{ per_row_large }} {{ class }}">
-    {% for product in products limit: product_limit %}
-      {% render 'product', section: section, collection: collection, product: product, product_class: product_class %}
+  <div class="small-item-grid-{{ collection_products_per_row_small }} medium-item-grid-{{ collection_products_per_row_medium }} large-item-grid-{{ collection_products_per_row_large }} {{ class }}">
+
+    {% for product in products limit: limit %}
+
+      {% comment %}
+        Collection products
+      {% endcomment %}
+      {% include 'product' with product, product_class: product_class %}
     {% else %}
       {% assign compare_at_class = compare_at_class | append: 'price compare-at' | replace: ' hidden', '' %}
       {% assign compare_at_price = 2999 %}
@@ -21,7 +45,11 @@
       {% assign show_from = section.settings.show_from %}
       {% assign show_compare_at_price = section.settings.show_compare_at_price %}
 
+      {% comment %}
+        Placeholder products
+      {% endcomment %}
       {% for i in (1..product_limit) %}
+        {% include 'set-product-vars' %}
         <div class="{{ product_class }}">
 
           <div class="image text-center">
@@ -39,15 +67,22 @@
               </h3>
             </header>
 
-            {% if section.settings.show_vendor %}
+            {% comment %}
+              Vendor
+            {% endcomment %}
+            {% if show_vendor %}
               <div class="vendor text-light lht font-size-14">{{ 'onboarding.product_vendor' | t }}</div>
             {% endif %}
 
-            {% if section.settings.show_price %}
-              {% render 'pricing', price: price, compare_at_price: compare_at_price, compare_at_class: compare_at_class, from_class: 'hidden', show_compare_at_price: show_compare_at_price %}
-            {% endif %}
+            {% comment %}
+              Price
+            {% endcomment %}
+            {% include 'pricing' %}
 
-            {% if section.settings.show_add_to_cart_button %}
+            {% comment %}
+              Actions
+            {% endcomment %}
+            {% if show_add_to_cart_button %}
               <div class="actions">
                 <a href="#" class="button disabled small">{{ 'products.add_to_cart' | t }}</a>
               </div>
@@ -61,4 +96,4 @@
   </div>
 </div>
 
-{% assign class = nil %}
+{%- assign class = nil -%}

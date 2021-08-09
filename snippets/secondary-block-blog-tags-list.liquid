@@ -1,14 +1,16 @@
-{% assign blog = blogs[block.settings.blog] %}
-{% assign excluded_tags = block.settings.exclude_tags | escape | replace: ' ', '' | split: ',' %}
+{% include 'settings' %}
 
-{% if blog != empty %}
+{%- assign sb_blog = blogs[block.settings.blog] -%}
+{%- assign sb_exclude_tags = block.settings.exclude_tags | escape | replace: ' ', '' | split: ',' -%}
+
+{% if sb_blog != empty %}
   <nav class="nav-side triangle-indicators" data-close-kin="false" data-expanded="false" data-node-transition-duration="300">
     <ul class="side-nav">
-      {% for tag in blog.tags %}
-        {% unless excluded_tags contains tag %}
-          <li class="{{ tag | handleize }}{% if current_tags contains tag %} active{% endif %}">
-            <a href="/blogs/{{ blog.handle }}/tagged/{{ tag | handle }}">{{ tag }}</a>
-          </li>
+      {% for tag in sb_blog.tags %}
+        {% unless sb_exclude_tags contains tag %}
+        <li class="{{ tag | handleize }}{% if current_tags contains tag %} active{% endif %}">
+          <a href="/blogs/{{ sb_blog.handle }}/tagged/{{ tag | handleize }}">{{ tag }}</a>
+        </li>
         {% endunless %}
       {% endfor %}
     </ul>

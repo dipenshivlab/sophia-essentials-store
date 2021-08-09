@@ -1,59 +1,35 @@
-{% render 'section-open', section: section, type: 'sidebar', title: false %}
+{% comment %}
+  Section
+{% endcomment %}
+{%- render 'separator' section_type: 'sidebar', show_title: false %}
 
+  {% comment %}
+    Blocks
+  {% endcomment %}
   {% if section.blocks.size > 0 %}
     {% for block in section.blocks %}
-      {% render 'block-open', section: section, block: block, class: 'secondary-block font-size-15' %}
-        {% case block.type %}
-          {% when 'separator' %}
-            {% render 'secondary-block-separator', section: section, block: block %}
-          {% when 'text' %}
-            {% render 'secondary-block-text', section: section, block: block %}
-          {% when 'image' %}
-            {% render 'secondary-block-image', section: section, block: block %}
-          {% when 'video' %}
-            {% render 'secondary-block-video', section: section, block: block %}
-          {% when 'blog-posts' %}
-            {% render 'secondary-block-blog-posts', section: section, block: block %}
-          {% when 'blog-tags-list' %}
-            {% render 'secondary-block-blog-tags-list', section: section, block: block %}
-          {% when 'collection' %}
-            {% render 'secondary-block-collection', section: section, block: block %}
-          {% when 'collection-list' %}
-            {% render 'secondary-block-collection-list', section: section, block: block %}
-          {% when 'collection-tags-list' %}
-            {% render 'secondary-block-collection-tags-list', section: section, block: block %}
-          {% when 'navigation' %}
-            {% render 'secondary-block-navigation', section: section, block: block %}
-          {% when 'newsletter' %}
-            {% render 'secondary-block-newsletter', section: section, block: block %}
-          {% when 'page-content' %}
-            {% render 'secondary-block-page-content', section: section, block: block %}
-          {% when 'product' %}
-            {% render 'secondary-block-product', section: section, block: block %}
-          {% when 'search' %}
-            {% render 'secondary-block-search', section: section, block: block %}
-          {% when 'social-icons' %}
-            {% render 'secondary-block-social-icons', section: section, block: block %}
-          {% when 'twitter-timeline' %}
-            {% render 'secondary-block-twitter-timeline', section: section, block: block %}
-          {% when 'html' %}
-            {% render 'secondary-block-html', section: section, block: block %}
-        {% endcase %}
-      {% render 'block-close' %}
+      {%- assign block_snippet = 'secondary-block-' | append: block.type -%}
+      {% include 'block-open' class: 'secondary-block font-size-15' %}
+      {% include block_snippet %}
+      {% include 'block-close' %}
     {% endfor %}
   {% else %}
-    {% render 'no-blocks' %}
+    {% include 'no-blocks' %}
   {% endif %}
 
-{% render 'section-close' %}
+{% include 'section-close'  %}
 
 
+{% comment %}
+  Schema
+{% endcomment %}
 {% schema %}
 {
   "name": "Sidebar",
   "class": "sidebar-section",
   "max_blocks": 12,
-  "settings": [],
+  "settings": [
+  ],
   "blocks": [
     {
       "type": "separator",

@@ -1,14 +1,22 @@
-{% assign separator_class = '' %}
+{% include 'settings' %}
 
-{% assign separator_class = separator_class | append: ' ' | append: block.settings.margin_top %}
-{% assign separator_class = separator_class | append: ' ' | append: block.settings.margin_bottom %}
+{%- assign sb_separator_class = '' -%}
 
+{% comment %}
+  Spacing
+{% endcomment %}
+{%- assign sb_separator_class = sb_separator_class | append: ' ' | append: block.settings.margin_top -%}
+{%- assign sb_separator_class = sb_separator_class | append: ' ' | append: block.settings.margin_bottom -%}
+
+{% comment %}
+  Show line
+{% endcomment %}
 {% if block.settings.show_line %}
-  {% assign separator_class = separator_class | append: ' lined' %}
+ {%- assign sb_separator_class = sb_separator_class | append: ' lined' -%}
 {% endif %}
 
 <h1 class="visually-hidden">{{ 'general.accessibility.separator' | t }}</h1>
 
-<div class="separator {{ separator_class }} {{ block.settings.width }}" style="border-bottom-color: {{ block.settings.line_color }}; border-bottom-width: {{ block.settings.line_thickness }}px"></div>
+<div class="separator {{ sb_separator_class }} {{ block.settings.width }}" style="border-bottom-color: {{ block.settings.line_color }}; border-bottom-width: {{ block.settings.line_thickness }}px"></div>
 
-{% assign separator_class = nil %}
+{%- assign sb_separator_class = null -%}

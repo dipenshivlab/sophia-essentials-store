@@ -25,13 +25,16 @@
   {% endif %}
 {% endif %}
 
-    </main>
+</main>
   </section>
 
+  {% comment %}
+    Sidebar
+  {% endcomment %}
   {% if sidebar %}
     {% render 'sidebar', class: sc, sidebar: sidebar %}
   {% endif %}
 
-</div>
+</div> <!-- #content-wrap -->
 
 {% assign class = nil %}

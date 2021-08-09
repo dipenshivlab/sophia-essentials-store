@@ -1,94 +1,125 @@
-{% assign blog = blogs[section.settings.blog] %}
+{% include 'settings' %}
 
-{% render 'section-open', section: section, type: 'blog', class: 'column-max' %}
+{% comment %} Section {% endcomment %}
+{% render 'section-open', section: section, type: 'blog', class: 'column-max', show_title: true %}
 
-  <style>
+{%- assign blog = blogs[section.settings.blog] -%}
+{% comment %} CSS {% endcomment %}
+<style>
+  #{{ section_id }} {
+  }
+
+  @media screen and (min-width: 640px) {
     {% if section.settings.article_limit == 1 %}
-      @media screen and (min-width: 640px) {
-        #shopify-section-{{ section.id }} .blog-article,
-        #shopify-section-{{ section.id }} .blog-article .meta {
+      #{{ section_id }} .blog-article,
+      #{{ section_id }} .blog-article .meta {
           text-align: center !important;
-        }
       }
     {% endif %}
-  </style>
+  }
+</style>
 
-  <div class="blog-articles medium-item-grid-{{ section.settings.article_limit }}">
-    {% if blog != empty and blog.articles_count > 0 %}
+<div class="blog-articles medium-item-grid-{{ section.settings.article_limit }}">
+  {% if blog != empty and blog.articles_count > 0 %}
 
-      {% assign show_tags = section.settings.show_tags %}
+  {%- assign show_tags = section.settings.show_tags -%}
 
-      {% for article in blog.articles limit: section.settings.article_limit %}
+    {% for article in blog.articles limit: section.settings.article_limit %}
 
-        {% if article.tags.size < 1 %}
-          {% assign show_tags = false %}
+      {% comment %} Hide the tags section if none are assigned {% endcomment %}
+      {% if article.tags.size < 1 %}
+        {%- assign show_tags = false -%}
+      {% endif %}
+
+      <article class="blog-article item">
+
+        {% comment %} Article image {% endcomment %}
+        {% if section.settings.show_image %}
+
+          {% include 'image' with article.image, image_type: 'article', image_link_url: article.url %}
+
+          {% comment %} Separator {% endcomment %}
+          {% include 'separator' class: 'margin-top-50' %}
         {% endif %}
 
-        <article class="blog-article item">
 
-          {% if section.settings.show_image %}
-            {% render 'image', image: article.image, image_type: 'article', image_link_url: article.url %}
-            {% render 'separator', class: 'margin-top-50' %}
-          {% endif %}
+        {% comment %} Article header {% endcomment %}
+        <header>
+          <h1 class="title no-margin">
+            {{ article.title | escape | link_to: article.url }}
+          </h1>
+        </header>
 
-          <header>
-            <h1 class="title no-margin">{{ article.title | link_to: article.url }}</h1>
-          </header>
+        {% comment %} Article meta {% endcomment %}
+        {% if section.settings.show_publish_date or section.settings.show_author or section.settings.show_comment_count %}
+          {% include 'separator' class:'margin-top-25 no-margin-bottom' %}
+          {% include 'article-meta' class: 'text-left text-light font-size-13 lht', current_blog: blog, show_publish_date: section.settings.show_publish_date, show_author: section.settings.show_author, show_comment_count: section.settings.show_comment_count %}
+          {% include 'separator' class: 'no-margin-top margin-bottom-50' %}
+        {% else %}
+          {% include 'separator' class: 'no-margin-top margin-bottom-25' %}
+        {% endif %}
 
-          {% if section.settings.show_publish_date or section.settings.show_author or section.settings.show_comment_count %}
-            {% render 'separator' class:'margin-top-25 no-margin-bottom' %}
-            {% render 'article-meta', blog: blog, article: article, class: 'text-left text-light font-size-13 lht', show_publish_date: section.settings.show_publish_date, show_author: section.settings.show_author, show_comment_count: section.settings.show_comment_count %}
-            {% render 'separator', class: 'no-margin-top margin-bottom-50' %}
-          {% else %}
-            {% render 'separator', class: 'no-margin-top margin-bottom-25' %}
-          {% endif %}
+        {% comment %} Article excerpt {% endcomment %}
+        {% if section.settings.show_excerpt %}
+          <div class="body">
+            {{ article.excerpt_or_content | strip_html | truncatewords: 30 }}
+          </div>
+        {% endif %}
 
-          {% if section.settings.show_excerpt %}
-            <div class="body">
-              {{ article.excerpt_or_content | strip_html | truncatewords: 30 }}
-            </div>
-          {% endif %}
+        {% comment %} Separator {% endcomment %}
+        {% if section.settings.show_article_link %}
+          {% include 'separator' class:'lined margin-top margin-bottom' %}
+        {% endif %}
 
-          {% if section.settings.show_article_link %}
-            {% render 'separator', class: 'lined margin-top margin-bottom' %}
-            <p class="article-link no-margin text-center"><a href="{{ article.url }}">{{ 'blog.article_list.go_to_article' | t }}</a></p>
-          {% endif %}
+        {% comment %} Article link {% endcomment %}
+        {% if section.settings.show_article_link %}
+          {% render 'separator', class: 'lined margin-top margin-bottom' %}
+          <p class="article-link no-margin text-center">
+            <a href="{{ article.url }}">{{ 'blog.article_list.go_to_article' | t }}</a>
+          </p>
+        {% endif %}
 
-          {% render 'json-ld-article', article: article %}
+        {% comment %} JSON-LD structured data {% endcomment %}
+        {% render 'json-ld-article', article: article %}
 
-        </article>
+      </article>
 
-      {% endfor %}
+    {% endfor %}
 
-    {% else %}
+  {% else %}
 
-      {% for i in (1..section.settings.article_limit) %}
-        <article class="blog-article mod-onboarding item">
+    {% for i in (1..section.settings.article_limit) %}
+      <article class="blog-article mod-onboarding item">
 
-          {% if section.settings.show_image %}
-            {% render 'image', image_type: 'collection', image_placeholder: true %}
-            {% render 'separator', class: 'margin-top-50' %}
-          {% endif %}
+        {% if section.settings.show_image %}
+          {% include 'image' image_type: 'collection', image_placeholder: true %}
+          {% include 'separator' class: 'margin-top-50' %}
+        {% endif %}
 
-          <header>
-            <h1 class="title margin-bottom-50">{{ 'onboarding.blog_title' | t }}</h1>
-          </header>
+        {% comment %} Article header {% endcomment %}
+        <header>
+          <h1 class="title margin-bottom-50">
+            {{ 'onboarding.blog_title' | t }}
+          </h1>
+        </header>
 
-          {% if section.settings.show_excerpt %}
-            <div class="body">
-              {{ 'onboarding.blog_content' | t }}
-            </div>
-          {% endif %}
+        {% comment %} Article excerpt {% endcomment %}
+        {% if section.settings.show_excerpt %}
+         <div class="body">
+            {{ 'onboarding.blog_content' | t }}
+          </div>
+        {% endif %}
 
-        </article>
-      {% endfor %}
+      </article>
+    {% endfor %}
+    
+  {% endif %}
+</div>
 
-    {% endif %}
-  </div>
-
-{% render 'section-close' %}
+{% include 'section-close'  %}
 
 
+{% comment %} Schema {% endcomment %}
 {% schema %}
   {
     "name": "Blog posts",
@@ -97,7 +128,8 @@
       {
         "type": "text",
         "id": "title",
-        "label": "Heading"
+        "label": "Heading",
+        "default": "Blog"
       },
       {
         "id": "blog",
@@ -109,7 +141,7 @@
         "id": "article_limit",
         "label": "Posts",
         "min": 1,
-        "max": 6,
+        "max": 4,
         "step": 1,
         "default": 3
       },

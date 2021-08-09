@@ -1,0 +1,33 @@
+<div class="pluginseo-headings" style="margin-top: 30px; margin-bottom: 30px;  padding: 0 0 0 0; text-align: center;">
+  <h1 class="home-page-mainheader" style="text-transform: uppercase; margin-bottom: 0px; padding: 0px; line-height: normal; letter-spacing: 1.5px; border: none;">{{ section.settings.heading }}</h1>
+  <h2 class="home-page-subheader" style="font-weight: 400; text-transform: none; margin-top: 0px; padding: 0px; line-height: normal; font-weight: normal; letter-spacing: 2px; border: none;">{{ section.settings.subheading }}</h2>
+</div>
+{% schema %}
+  {
+    "name": "Plug in SEO Headings",
+    "settings": [
+      {
+        "id": "heading",
+        "type": "text",
+        "label": "Heading",
+        "default": "Enter your H1 here."
+      },
+      {
+        "id": "subheading",
+        "type": "textarea",
+        "label": "Subheading",
+        "default": "Enter your H2 here."
+      }
+    ],
+"presets": [
+    {
+      "name": "Plug in SEO Headings Section",
+      "category": "Text"
+    }
+  ]
+  }
+{% endschema %}
+{% stylesheet %}
+{% endstylesheet %}
+{% javascript %}
+{% endjavascript %}
