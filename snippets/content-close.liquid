@@ -19,7 +19,7 @@
   {% unless sidebar_side %}
     {% assign sidebar_side = settings.sidebar_side %}
   {% endunless %}
-  {% assign sc = sc | append: ' medium-4 large-3 margin-top-200' %}
+  {% assign sc = sc | append: ' medium-4 large-3' %}
   {% if settings.sidebar_enable_sticky %}
     {% assign sc = sc | append: ' sticky-sidebar' %}
   {% endif %}
@@ -32,7 +32,7 @@
     Sidebar
   {% endcomment %}
   {% if sidebar %}
-    {% render 'sidebar', class: sc, sidebar: sidebar %}
+    {% include 'sidebar' class: sc %}
   {% endif %}
 
 </div> <!-- #content-wrap -->
