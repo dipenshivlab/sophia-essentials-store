@@ -1,6 +1,13 @@
+{% include 'settings' %}
+
+{% comment %}
+  CSS
+{% endcomment %}
 <style>
-  #section-block-{{ block.type }}-{{ block.id }} .rte {
-    color: {{ block.settings.color }};
+  #{{ block_id }} .rte {
+    {% if block.settings.color %}
+      color: {{ block.settings.color }};
+    {% endif %}
   }
 </style>
 

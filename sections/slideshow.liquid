@@ -170,8 +170,7 @@
               data-alt="{{ block.settings.image.alt | escape }}"
               {% endif %}
               data-bgset="{% unless block.settings.show_image_only %}{% if block.settings.image != blank %}{% render 'image-bgset', image: block.settings.image %}{% endif %}{% endunless %}"
-              data-sizes="auto" data-parent-fit="cover"
-              style="{% unless forloop.first %}visibility: hidden;{% endunless %}">
+              data-sizes="auto" data-parent-fit="cover">
 
               {% if block.settings.link_url != blank and block.settings.button_1_text == blank %}
                 <a class="item-inner-link" href="{{ block.settings.link_url }}"></a>
@@ -274,19 +273,6 @@
       {% render 'block-close' %}
 
     {% endfor %}
-
-    {% if section.settings.autoplay %}
-    <div class="slideshow__controls">
-      <button class="slideshow__pause {% unless section.settings.pause %}slideshow__controls--hidden{% endunless %}" aria-live="polite" aria-pressed="false" aria-label="{{ 'general.accessibility.pause' | t: item: 'slideshow' }}" data-slider-pause>
-        <span class="slideshow__pause--stop">
-          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-pause" viewBox="0 0 9.52 11"><path d="M1.5 11A1.5 1.5 0 0 1 0 9.5v-8a1.5 1.5 0 0 1 3 0v8A1.5 1.5 0 0 1 1.5 11zM8 11a1.5 1.5 0 0 1-1.5-1.5v-8a1.5 1.5 0 1 1 3 0v8A1.5 1.5 0 0 1 8 11z" fill="#fff"></path></svg>
-        </span>
-        <span class="slideshow__pause--play">
-          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-play" viewBox="0 0 20 40"><path fill-rule="evenodd" clip-rule="evenodd" d="M23.6 16.8L7 1.5C5.6.3 4 .2 2.9.7 1.6 1.4.8 2.7.7 3.8v31.7c0 1.8 1.1 3.3 3.1 3.3 1.5 0 2.5-.5 3.4-1.4l16.4-15.7c1.5-1.4 1.5-3.6 0-4.9z"></path></svg>
-        </span>
-      </button>
-    </div>
-    {% endif %}
 
   </div>
 

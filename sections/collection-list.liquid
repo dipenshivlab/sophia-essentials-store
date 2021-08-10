@@ -1,35 +1,47 @@
-{% if section.blocks.size < section.settings.images_per_row_large %}
-  {% assign images_per_row_large = section.blocks.size %}
+{% include 'settings' %}
+
+{% if section.settings.width == 'width-100' %}
+  {%- assign section_class = 'width-100 body-padding' %}
 {% else %}
-  {% assign images_per_row_large = section.settings.images_per_row_large %}
+  {%- assign section_class = 'column-max' %}
 {% endif %}
 
-{% render 'section-open', section: section, type: 'collection-list' %}
+{% if section.blocks.size < section.settings.images_per_row_large %}
+  {%- assign images_per_row_large = section.blocks.size -%}
+{% else %}
+  {%- assign images_per_row_large = section.settings.images_per_row_large -%}
+{% endif %}
+
+{% comment %} Section {% endcomment %}
+{% render 'section-open', section: section, type: 'collection-list', class: section_class, show_title: true %}
 
   <div class="small-item-grid-1 medium-item-grid-2 large-item-grid-{{ images_per_row_large }}">
+    {% comment %} Blocks {% endcomment %}
     {% if section.blocks.size > 0 %}
       {% for block in section.blocks %}
-        {% assign block_class = 'collection-grid-item item' %}
-        {% assign collection = collections[block.settings.collection] %}
+        {%- assign block_class = 'collection-grid-item item' -%}
+        {%- assign collection = collections[block.settings.collection] -%}
+
         {% if collection != empty %}
-          {% assign collection_item_count = collection.all_products_count %}
-          {% assign collection_title = collection.title %}
-          {% assign collection_url = collection.url %}
-          {% assign image_placeholder = false %}
+          {%- assign collection_item_count = collection.all_products_count -%}
+          {%- assign collection_title = collection.title -%}
+          {%- assign collection_url = collection.url -%}
+          {%- assign image_placeholder = false -%}
+
           {% if collection.image %}
-            {% assign collection_image = collection.image %}
+            {%- assign collection_image = collection.image -%}
           {% else %}
-            {% assign collection_image = collection.products.first.featured_image %}
+            {%- assign collection_image = collection.products.first.featured_image -%}
           {% endif %}
         {% else %}
-          {% assign collection_item_count = 10 %}
-          {% assign collection_title = 'onboarding.collection_title' | t %}
-          {% assign collection_url = '#' %}
-          {% assign image_placeholder = true %}
+          {%- assign collection_item_count = 10 -%}
+          {%- assign collection_title = 'onboarding.collection_title' | t -%}
+          {%- assign collection_url = '#' -%}
+          {%- assign image_placeholder = true -%}
         {% endif %}
         {% render 'block-open', section: section, block: block, class: block_class %}
-          {% render 'image', image: collection_image, image_type: 'collection', image_placeholder: image_placeholder, image_link_url: collection.url %}
-          {% render 'separator', class: 'margin-top-50 no-margin-bottom' %}
+        {% render 'image', image: collection_image, image_type: 'collection', image_placeholder: image_placeholder, image_link_url: collection.url %}
+        {% render 'separator', class: 'margin-top-50 no-margin-bottom' %}
           <div class="collection-details">
             <div class="collection-title lht"><a class="text-color" href="{{ collection_url }}">{{ collection_title }}</a></div>
             <div class="collection-item-count text-light font-size-14">{{ 'collections.collection_list.item_count' | t: count: collection_item_count }}</div>
@@ -42,9 +54,9 @@
 
   </div>
 
-{% render 'section-close' %}
+  {% render 'section-close' %}
 
-
+{% comment %} Schema {% endcomment %}
 {% schema %}
 {
   "name": "Collection list",

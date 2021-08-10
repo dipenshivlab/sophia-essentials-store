@@ -1,73 +1,99 @@
+{% include 'settings' %}
+
 {% render 'section-open', section: section, type: 'newsletter', title: false %}
 
-  <style>
-    #shopify-section-{{ section.id }} .newsletter-content {
-      background-color: {{ section.settings.bg_color }};
-      color: {{ section.settings.color_text }};
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
-    #shopify-section-{{ section.id }} .newsletter-heading {
-      color: {{ section.settings.color_text }};
-      {% if section.settings.heading != blank and section.settings.subheading == blank %}
-        margin: 0;
-      {% else %}
-        margin-top: 0;
-      {% endif %}
-    }
-    #shopify-section-{{ section.id }} .newsletter-subheading {
+{% comment %}
+  Section
+{% endcomment %}
+{%- render 'separator' section_type: 'example', show_title: true %}
+
+
+{% comment %}
+  CSS
+{% endcomment %}
+<style>
+
+  #{{ section_id }} .newsletter-content {
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.color_text }};
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  #{{ section_id }} .newsletter-heading {
+    color: {{ section.settings.color_text }};
+    {% if section.settings.heading != blank and section.settings.subheading == blank %}
       margin: 0;
-    }
-    #shopify-section-{{ section.id }} .newsletter-form input[type="email"] {
-      border-right: none;
-      border-right-width: 0;
-      border-bottom-right-radius: 0;
-      border-top-right-radius: 0;
-    }
-    #shopify-section-{{ section.id }} .newsletter-form button {
-      border-left: none;
-      border-bottom-left-radius: 0;
-      border-top-left-radius: 0;
-      padding-right: 0.9375rem;
-      padding-left: 0.9375rem;
-      width: 100%;
-    }
-  </style>
+    {% else %}
+      margin-top: 0;
+    {% endif %}
+  }
 
-  <div class="newsletter-content">
-    <div class="column-extra-narrow padding-top-150 padding-bottom-150 text-center">
+  #{{ section_id }} .newsletter-subheading {
+    margin: 0;
+  }
 
-      {% if section.settings.heading != blank %}
-        <h2 class="newsletter-heading lhxt">
-          {{ section.settings.heading | escape }}
-        </h2>
-      {% endif %}
+  #{{ section_id }} .newsletter-form input[type="email"] {
+    border-right: none;
+    border-right-width: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+  }
 
-      {% if section.settings.subheading != blank %}
-        <p class="newsletter-subheading">{{ section.settings.subheading }}</p>
-      {% endif %}
+  #{{ section_id }} .newsletter-form button {
+    border-left: none;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    padding-right: 0.9375rem;
+    padding-left: 0.9375rem;
+    width: 100%;
+  }
 
-      {% render 'separator', class: 'margin-top-50 margin-bottom-50' %}
+</style>
 
-      {%- assign formId = 'Contact_' | append: section.id -%}
-      {% form 'customer', id: formId, novalidate: 'novalidate' %}
 
-        {% render 'form-errors', form: form %}
+<div class="newsletter-content">
 
-        {% if form.posted_successfully? %}
+  <div class="column-extra-narrow padding-top-150 padding-bottom-150 text-center">
 
-          <div class="form-success panel green text-center font-size-15" tabindex="-1" data-form-status role="alert">
-            {{ 'newsletter.success_message' | t }}
-          </div>
+    {% unless section.settings.heading == blank %}
+      <h2 class="newsletter-heading lhxt">
+        {{ section.settings.heading | escape }}
+      </h2>
+    {% endunless %}
+    {% unless section.settings.subheading == blank %}
+      <p class="newsletter-subheading">{{ section.settings.subheading }}</p>
+    {% endunless %}
 
-        {% else %}
+    {% include 'separator' class:'margin-top-50 margin-bottom-50' %}
 
-          <input type="hidden" name="contact[tags]" value="newsletter">
+    {% form 'customer' %}
 
-          <div class="newsletter-form table">
+      {% comment %}
+        Error message
+      {% endcomment %}
+      {% include 'form-errors' %}
 
-            <div class="cell">
-              <input type="email" name="contact[email]" value="{{ form.email }}" placeholder="{{ 'newsletter.email_field_placeholder' | t }}"
+      {% if form.posted_successfully? %}
+
+        {% comment %}
+          Success message
+        {% endcomment %}
+        <div class="form-success panel green text-center font-size-15">
+          {{ 'newsletter.success_message' | t }}
+        </div>
+
+      {% else %}
+
+        <input type="hidden" name="contact[tags]" value="newsletter">
+
+        {% comment %}
+          Email
+        {% endcomment %}
+        <div class="newsletter-form table">
+          <div class="cell">
+            {% comment %}<label for="email">{{ 'newsletter.email_field_label' | t }}</label>{% endcomment %}
+            <input type="email" name="contact[email]" value="{{ form.email }}" placeholder="{{ 'newsletter.email_field_placeholder' | t }}"
               aria-label="{{ 'newsletter.email_field_placeholder' | t }}"
               required
               {% if form.errors %}
@@ -76,53 +102,52 @@
                   aria-describedby="{{ formId }}-email-error"
                   data-form-status
               {% endif %}>
-            </div>
-
-            <div class="cell">
-              <button type="submit" class="button" aria-label="{{ 'general.accessibility.submit' | t }}">{{ 'newsletter.submit' | t }}</button>
-            </div>
-
           </div>
+          <div class="cell">
+            <button type="submit" class="button"  aria-label="{{ 'general.accessibility.submit' | t }}">{{ 'newsletter.submit' | t }}</button>
+          </div>
+        </div>
 
-        {% endif %}
+      {% endif %}
+    {% endform %}
 
-      {% endform %}
-
-    </div>
   </div>
+</div>
 
-{% render 'section-close' %}
+{% include 'section-close'  %}
 
-
+{% comment %}
+  Schema
+{% endcomment %}
 {% schema %}
 {
   "name": "Newsletter",
   "class": "index-section section-newsletter",
   "settings": [
-    {
-      "type": "header",
-      "content": "Section"
-    },
-    {
-      "id": "width",
-      "type": "select",
-      "label": "Width",
-      "options": [
-        {"value": "column-max", "label": "Content"},
-        {"value": "width-100", "label": "Screen"}
-      ],
-      "default": "column-max"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background color",
-      "default": "#f0f1f2"
-    },
-    {
-      "type": "header",
-      "content": "Content"
-    },
+  {
+    "type": "header",
+    "content": "Section"
+  },
+  {
+    "id": "width",
+    "type": "select",
+    "label": "Width",
+    "options": [
+      {"value": "column-max", "label": "Content"},
+      {"value": "width-100", "label": "Screen"}
+    ],
+    "default": "column-max"
+  },
+  {
+    "type": "color",
+    "id": "bg_color",
+    "label": "Background color",
+    "default": "#f0f1f2"
+  },
+  {
+    "type": "header",
+    "content": "Content"
+  },
     {
       "type": "text",
       "id": "heading",
@@ -138,8 +163,7 @@
     {
       "type": "color",
       "id": "color_text",
-      "label": "Text color",
-      "default": "#2a2b2b"
+      "label": "Text color"
     },
     {
       "type": "paragraph",
