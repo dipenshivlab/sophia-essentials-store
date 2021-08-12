@@ -1,4 +1,4 @@
- if ((typeof SCAPPinit) === 'undefined') { SCAPPinit = {initial:false};};
+if ((typeof SCAPPinit) === 'undefined') { SCAPPinit = {initial:false};};
 if(typeof SCAPP==="undefined"){SCAPP={version:1,activated:0,created:1598288400};}
 SCAPP.popups={};
 SCAPP.filter={"home":[],"product":[],"category":[],"blog":[],"page":[],"cart_empty":[],"cart_nonempty":[],"cart_specific":[],"specific":[],"remove":[],"all":[],"open":[],"leave":[]};

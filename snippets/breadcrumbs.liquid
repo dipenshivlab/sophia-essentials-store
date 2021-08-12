@@ -34,7 +34,7 @@
     {%- assign product_url = product.url -%}
     {% if collection and collection.handle %}
       {% capture collection_url %}{{ routes.root_url }}{% if routes.root_url != '/' %}/{% endif %}collections/{{ collection.handle }}{% endcapture %}
-      {%- assign product_url = product.url | within: collection -%}
+      {%- assign product_url = product.url -%}
       {{ collection.title | link_to: collection_url, collection.title }}
     {% endif %}
     {{ page_title | link_to: product_url, page_title }}
