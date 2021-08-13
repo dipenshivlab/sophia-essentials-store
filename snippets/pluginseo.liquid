@@ -77,6 +77,7 @@
 {%- assign pTF = 's' -%}
 {%- assign pageTitleManuallyEntered = true -%}
 {%- assign defaultPageTitle = nil -%}
+{%- comment -%}
 {%- if hasLangify == true and detectedLanguage != shop.metafields["languages"]["default"] -%}
   {%- assign pTF = pTF | append: '-lf' -%}
   {%- if rootTemplate == 'index' -%}
@@ -170,6 +171,7 @@
   {%- endif -%}
   <title>{{ pageTitle | strip_html | strip_newlines }}</title>
 {%- endif -%}
+{%- endcomment -%}
 {%- comment -%}
   ----------------------------------------------------------------------------------
   Meta description

@@ -35,10 +35,10 @@
 {%- comment -%}
   Meta description
   <title>{{ seo_title }}</title>
-{%- endcomment -%}
-{%- if seo_description -%}
+  {%- if seo_description -%}
   {%- assign page_description = seo_description -%}
-{%- endif -%}
-{%- if page_description -%}
+  {%- endif -%}
+  {%- if page_description -%}
   <meta name="description" content="{{ page_description | escape }}">
-{%- endif -%}
+  {%- endif -%}
+  {%- endcomment -%}
