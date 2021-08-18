@@ -1,0 +1,15 @@
+{% render 'image', image: section.settings.image %}
+
+{% schema %}
+  {
+    "name": "Page Image",
+    "settings": [
+  	  {
+        "id": "image",
+        "type": "image_picker",
+        "label": "Image"
+      }
+    ]
+  }
+{% endschema %}
+

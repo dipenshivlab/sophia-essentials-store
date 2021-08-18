@@ -1,5 +1,9 @@
-{% render 'content-open', class: 'column-max' %}
+{% include 'settings' %}
+{% include 'content-open' class:'column-max' %}
 
-  {% section 'cart-template' %}
+{% comment %}
+  The contents of the cart.liquid template can be found in /sections/cart-template.liquid
+{% endcomment %}
+{% section 'cart-template' %}
 
-{% render 'content-close' %}
+{% include 'content-close' %}

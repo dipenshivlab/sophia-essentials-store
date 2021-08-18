@@ -1,7 +1,10 @@
-{% render 'breadcrumbs' %}
+{% include 'settings' %}
+{% include 'breadcrumbs' %}
+{% include 'content-open' class:'column-max no-padding-top' %}
 
-{% render 'content-open', class: 'column-max no-padding-top' %}
+{% comment %}
+  The contents of the article.liquid template can be found in /sections/article-template.liquid
+{% endcomment %}
+{% section 'article-template' %}
 
-  {% section 'article-template' %}
-
-{% render 'content-close' %}
+{% include 'content-close' %}
