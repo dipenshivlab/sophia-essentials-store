@@ -37,7 +37,7 @@
   {% if settings.share_twitter %}
     <div class="share-button twitter">
       <a href="http://twitter.com/share" data-url="{{ share_url }}" data-text="{{ 'general.social.share_on_twitter' | t }}" class="twitter-share-button" data-count="none">{{ 'general.social.share_on_twitter' | t }}</a>
-      <script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+      <script type="text/javascript" src="//platform.twitter.com/widgets.js" defer async="async"></script>
     </div>
   {% endif %}
 
@@ -48,7 +48,7 @@
     <div class="share-button pinterest">
       <a data-pin-do="buttonPin" data-pin-color="white" data-pin-media="{{ share_media_url }}" data-pin-description="{{ share_description }}" href="https://www.pinterest.com/pin/create/button/"></a>
       <!-- Please call pinit.js only once per page -->
-      <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
+      <script async defer src="//assets.pinterest.com/js/pinit.js" defer async="async"></script>
     </div>
   {% endif %}
 
