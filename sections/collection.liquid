@@ -1,19 +1,24 @@
-{% assign collection = collections[section.settings.collection] %}
+{% include 'settings' %}
 
-{% if section.settings.title == blank %}
-  {% assign title = collection.title %}
+{%- assign collection = collections[section.settings.collection] %}
+
+{%- assign product_limit = section.settings.products_per_row | times: section.settings.product_rows -%}
+
+{% if section.settings.width == 'width-100' %}
+  {%- assign section_class = 'width-100 body-padding' %}
 {% else %}
-  {% assign title = section.settings.title %}
+  {%- assign section_class = 'column-max' %}
 {% endif %}
 
-{% assign product_limit = section.settings.products_per_row | times: section.settings.product_rows %}
+{% comment %} Section {% endcomment %}
+{%- render 'separator' section_type: 'collection', class: section_class, show_title: true %}
 
-{% render 'section-open', section: section, type: 'collection', title: title %}
+{% comment %}  Products {% endcomment %}
+{% include 'products' with collection.products, class: 'row-spacing-150', limit: product_limit, show_add_to_cart_button: section.settings.show_add_to_cart_button, show_compare_at_price: section.settings.show_compare_at_price, show_price: section.settings.show_price, show_sale_sticker: section.settings.show_sale_sticker, show_vendor: section.settings.show_vendor %}
 
-  {% render 'products', section: section, collection: collection, products: collection.products, product_limit: product_limit, class: 'row-spacing-150' %}
+{% include 'section-close'  %}
 
-{% render 'section-close' %}
-
+{% comment %} Schema {% endcomment %}
 
 {% schema %}
 {
@@ -109,6 +114,12 @@
       "label": "Show sale sticker",
       "info": "Shown when product has 'compare at' price higher than 'price'",
       "default": true
+    },
+    {
+      "type": "color",
+      "id": "bg_details_color",
+      "label": "Details background",
+      "default": "#ffffff"
     }
   ],
   "presets": [

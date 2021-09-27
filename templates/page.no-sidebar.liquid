@@ -1,9 +1,12 @@
-{% render 'content-open', class: 'column-max', sidebar: false %}
+{% include 'settings' %}
 
-  {% render 'page-header', title: page.title %}
+{%- assign sidebar = false -%}
 
-  {% render 'separator' %}
+{% include 'content-open' class: 'column-max', sidebar: false %}
+{% include 'page-header' title: page.title %}
 
-  {{ page.content }}
+{% render 'separator' %}
 
-{% render 'content-close', sidebar: false %}
+{{ page.content }}
+
+{% include 'content-close', sidebar : false %}

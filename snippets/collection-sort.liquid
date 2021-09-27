@@ -1,4 +1,5 @@
 <div class="sort-collection inline-block">
+  {% comment %}<label for="sort-collection-by">{{ 'collections.sort.sort' | t }}</label> {% endcomment %}
   <select class="sort-collection-by" data-sort-by="{{ collection.sort_by | default | escape }}">
     <option value="">{{ 'collections.sort.sort' | t }}</option>
     <option value="manual">{{ 'collections.sort.featured' | t }}</option>

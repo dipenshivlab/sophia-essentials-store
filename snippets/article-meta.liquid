@@ -1,11 +1,31 @@
 {% assign date_format = '%B %d, %Y' %}
 
 {% unless class %}
-  {% assign class = 'text-light text-center font-size-14 lht' %}
+  {%- assign class = 'text-light text-center font-size-14 lht' -%}
 {% endunless %}
 
+{% unless current_blog %}
+  {%- assign current_blog = blog -%}
+{% endunless %}
+
+{% unless show_publish_date %}
+  {%- assign show_publish_date = section.settings.show_publish_date -%}
+{% endunless %}
+
+{% unless show_author %}
+  {%- assign show_author = section.settings.show_author -%}
+{% endunless %}
+
+{% unless show_comment_count %}
+  {%- assign show_comment_count = section.settings.show_comment_count -%}
+{% endunless %}
+
+{% comment %}
+  Meta
+{% endcomment %}
 <div class="meta {{ class }}">
-  {% if show_publish_date %}<span class="published group">{{ article.published_at | time_tag: date_format }}</span>{% endif %}{% if show_author %}<span class="author group">{{ article.author }}</span>{% endif %}{% if show_comment_count %}{% if blog.comments_enabled? and article.comments.size > 0 %}<span class="comment-count group"><a class="text-light" href="{{ article.url }}#comments">{{ 'blog.comments.count' | t: count: article.comments_count }}</a></span>{% endif %}{% endif %}
+  {% if show_publish_date %}<span class="published group">{{ article.published_at | time_tag: date_format }}</span>{% endif %}{% if show_author %}<span class="author group">{{ article.author }}</span>{% endif %}{% if show_comment_count %}{% if current_blog.comments_enabled? and article.comments.size > 0 %}<span class="comment-count group"><a class="text-light" href="{{ article.url }}#comments">{{ 'blog.comments.count' | t: count: article.comments_count }}</a></span>{% endif %}
+  {% endif %}
 </div>
 
-{% assign class = nil %}
+{%- assign class = nil -%}

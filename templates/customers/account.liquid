@@ -1,111 +1,121 @@
+{% include 'settings' %}
 {% assign date_format = '%B %d, %Y' %}
+{%- assign sidebar = 'sidebar-customers-account' -%}
+{%- assign title = 'shopify.page_titles.account' | t -%}
 
-{% assign sidebar = 'sidebar-customers-account' %}
+{% include 'breadcrumbs' %}
+{% include 'content-open' class:'column-max no-padding-top' %}
+{% include 'page-header' %}
+{% include 'separator' %}
 
-{% assign title = 'shopify.page_titles.account' | t %}
+{% comment %} Order history {% endcomment %}
+<div id="order-history">
 
-{% render 'breadcrumbs' %}
+  {% if customer.orders.size != 0 %}
+    {% paginate customer.orders by 20 %}
 
-{% render 'content-open', class: 'column-max no-padding-top', sidebar: sidebar %}
+    <p class="no-margin">{{ 'customer.orders.order_history' | t }}</p>
 
-  {% render 'page-header', title: title %}
+    {% comment %} Separator {% endcomment %}
+    {% include 'separator' class: 'lined full margin-top-50 margin-bottom' %}
 
-  {% render 'separator' %}
+    <div class="customer-orders">
+      {% for order in customer.orders %}
 
-  <div id="order-history">
-    {% if customer.orders.size > 0 %}
-      {% paginate customer.orders by 20 %}
+        {%- assign reorder_url = nil -%}
+        
+        {% for line_item in order.line_items %}
+          {% capture reorder_url %}{{ reorder_url | append: line_item.variant_id | append: ':' | append: line_item.quantity | append: ',' }}{% endcapture %}
+        {% endfor %}
 
-      <p class="no-margin">{{ 'customer.orders.order_history' | t }}</p>
+        <div class="row">
+          <div class="name large-2 columns">
 
-      {% render 'separator', class: 'lined full margin-top-50 margin-bottom' %}
+            {% comment %} Order number {% endcomment %}
+            <strong><a class="text-color font-size-18" href="{{ order.customer_url }}">{{ order.name }}</a></strong>
 
-      <div class="customer-orders">
-        {% for order in customer.orders %}
+          </div>
 
-          {% assign reorder_url = nil %}
+          <div class="meta large-7 columns lht">
 
-          {% for line_item in order.line_items %}
-            {% capture reorder_url %}{{ reorder_url | append: line_item.variant_id | append: ':' | append: line_item.quantity | append: ',' }}{% endcapture %}
-          {% endfor %}
+            {% comment %} Separator {% endcomment %}
+            {% include 'separator' class: 'margin-top-50 no-margin-bottom hide-for-large' %}
 
-          <div class="row">
+            <div class="small-item-grid-1 medium-item-grid-2 row-spacing-50">
 
-            <div class="name columns large-2">
-              <strong><a class="text-color font-size-18" href="{{ order.customer_url }}">{{ order.name }}</a></strong>
-            </div>
-
-            <div class="meta columns large-7 lht">
-
-              {% render 'separator', class: 'margin-top-50 no-margin-bottom hide-for-large' %}
-
-              <div class="small-item-grid-1 medium-item-grid-2 row-spacing-50">
-
-                <div class="item">
-                  <div class="label font-size-13 text-light">
-                    {{ 'customer.order.placed' | t }}
-                  </div>
-                  <div class="value font-size-15">
-                    {{ order.created_at | date: date_format }}
-                  </div>
+              {% comment %} Placed {% endcomment %}
+              <div class="item">
+                <div class="label font-size-13 text-light">
+                  {{ 'customer.order.placed' | t }}
                 </div>
-
-                <div class="item">
-                  <div class="label font-size-13 text-light">
-                    {{ 'customer.order.total' | t }}
-                  </div>
-                  <div class="value font-size-15">
-                    {% render 'price', amount: order.total_price, class: 'price order-total-price' %}
-                  </div>
+                <div class="value font-size-15">
+                  {{ order.created_at | date: date_format }}
                 </div>
-
-                <div class="item">
-                  <div class="label font-size-13 text-light">
-                    {{ 'customer.order.payment_status' | t }}
-                  </div>
-                  <div class="value font-size-15">
-                    {{ order.financial_status_label }}
-                  </div>
-                </div>
-
-                <div class="item">
-                  <div class="label font-size-13 text-light">
-                    {{ 'customer.order.fulfillment_status' | t }}
-                  </div>
-                  <div class="value font-size-15">
-                    {{ order.fulfillment_status_label }}
-                  </div>
-                </div>
-
               </div>
 
-            </div>
+              {% comment %} Total {% endcomment %}
+              <div class="item">
+                <div class="label font-size-13 text-light">
+                  {{ 'customer.order.total' | t }}
+                </div>
+                <div class="value font-size-15">
+                  {% include 'price' amount: order.total_price, class: 'price order-total-price' %}
+                </div>
+              </div>
 
-            <div class="actions columns large-3 text-right-large">
+              {% comment %} Payment status {% endcomment %}
+              <div class="item">
+                <div class="label font-size-13 text-light">
+                  {{ 'customer.order.payment_status' | t }}
+                </div>
+                <div class="value font-size-15">
+                  {{ order.financial_status_label }}
+                </div>
+              </div>
 
-              {% render 'separator', class: 'hide-for-large' %}
-
-              <a class="button small" href="{{ order.customer_url }}">{{ 'customer.orders.view' | t }}</a></td>
-
-              <a class="button small" href="{{ routes.cart_url | append: '/' | append: reorder_url }}">{{ 'customer.orders.reorder' | t }}</a>
+              {% comment %} Fulfillment status {% endcomment %}
+              <div class="item">
+                <div class="label font-size-13 text-light">
+                  {{ 'customer.order.fulfillment_status' | t }}
+                </div>
+                <div class="value font-size-15">
+                  {{ order.fulfillment_status_label }}
+                </div>
+              </div>
 
             </div>
 
           </div>
 
-          {% unless forloop.last %}
-            {% render 'separator', class: 'lined full margin-top margin-bottom' %}
-          {% endunless %}
+          <div class="actions large-3 columns text-right-large">
 
-        {% endfor %}
-      </div>
+            {% comment %} Separator {% endcomment %}
+            {% include 'separator' class: 'hide-for-large' %}
 
-      {% render 'pagination', paginate: paginate %}
+            {% comment %} View {% endcomment %}
+            <a class="button small" href="{{ order.customer_url }}">{{ 'customer.orders.view' | t }}</a></td>
 
-      {% endpaginate %}
-    {% else %}
-      <p>{{ 'customer.orders.none' | t }}</p>
-    {% endif %}
-  </div>
+            {% comment %} Reorder {% endcomment %}
+            <a class="button small" href="{{ routes.cart_url | append: '/' | append: reorder_url }}">{{ 'customer.orders.reorder' | t }}</a>
 
-{% render 'content-close', sidebar: sidebar %}
+          </div>
+
+        </div>
+
+        {% comment %} Separator {% endcomment %}
+        {% unless forloop.last %}
+          {% include 'separator' class: 'lined full margin-top margin-bottom' %}
+        {% endunless %}
+      {% endfor %}
+    </div>
+
+    {% comment %} Pagination {% endcomment %}
+    {% include 'pagination' %}
+
+    {% endpaginate %}
+  {% else %}
+    <p>{{ 'customer.orders.none' | t }}</p>
+  {% endif %}
+</div>
+
+{% include 'content-close' %}

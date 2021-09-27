@@ -1,26 +1,45 @@
-{% if section.blocks.size < section.settings.images_per_row_large %}
-  {% assign images_per_row_large = section.blocks.size %}
+{% include 'settings' %}
+
+{% if section.settings.width == 'width-100' %}
+  {%- assign section_class = 'width-100' %}
 {% else %}
-  {% assign images_per_row_large = section.settings.images_per_row_large %}
+  {%- assign section_class = 'column-max' %}
 {% endif %}
 
-{% render 'section-open', section: section, type: 'gallery' %}
+{% if section.blocks.size < section.settings.images_per_row_large %}
+  {%- assign images_per_row_large = section.blocks.size -%}
+{% else %}
+  {%- assign images_per_row_large = section.settings.images_per_row_large -%}
+{% endif %}
+
+{% comment %}
+  Section
+{% endcomment %}
+{%- render 'separator' section_type: 'gallery', class: section_class, show_title: true %}
 
   <div class="small-item-grid-1 medium-item-grid-2 large-item-grid-{{ images_per_row_large }}">
+
+    {% comment %}
+      Blocks
+    {% endcomment %}
     {% for block in section.blocks %}
-      {% render 'block-open', section: section, block: block, class: 'item' %}
-        {% if block.settings.image != blank %}
-          {% render 'image', image: block.settings.image, image_type: 'gallery', image_link_url: block.settings.image_link_url %}
-        {% else %}
-          {% render 'image', image_placeholder: true %}
-        {% endif %}
-      {% render 'block-close' %}
+      {% include 'block-open' class: 'item', section: section, block: block, %}
+
+      {% if block.settings.image != blank %}
+        {% include 'image' with block.settings.image, image_type: 'gallery', image_link_url: block.settings.image_link_url %}
+      {% else %}
+        {% include 'image' image_placeholder: true %}
+      {% endif %}
+      {% include 'block-close' %}
     {% endfor %}
+
   </div>
 
-{% render 'section-close' %}
+{% include 'section-close'  %}
 
-
+{% comment %}
+  Schema
+{% endcomment %}
 {% schema %}
 {
   "name": "Gallery",

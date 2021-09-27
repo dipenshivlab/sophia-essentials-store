@@ -1,11 +1,13 @@
-{% assign video_class = 'video-wrap' %}
+{% include 'settings' %}
+
+{%- assign sb_video_class = 'video-wrap' -%}
 
 {% if block.settings.make_responsive %}
-  {% assign video_class = video_class | append: ' fit-video' %}
+  {%- assign sb_video_class = sb_video_class | append: ' fit-video' -%}
 {% endif %}
 
 {% if block.settings.video_url != blank %}
-  <div class="{{ video_class }}">
+  <div class="{{ sb_video_class }}">
     {% if block.settings.video_url.type == 'youtube' %}
       <iframe src="https://www.youtube.com/embed/{{ block.settings.video_url.id }}" width="{{ block.settings.video_width | escape }}" height="{{ block.settings.video_height | escape }}" frameborder="0" allowfullscreen></iframe>
     {% elsif block.settings.video_url.type == 'vimeo' %}

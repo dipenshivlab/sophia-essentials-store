@@ -1,28 +1,40 @@
+{% include 'settings' %}
+
+{% comment %}
+  Section
+{% endcomment %}
 {% render 'section-open', section: section, type: 'video', body_padding: false %}
 
-  <style>
-    #shopify-section-{{ section.id }} .video-wrap {
-      max-width: {{ section.settings.video_max_width}}%;
-      margin: 0 auto;
-    }
-  </style>
 
-  {% if section.settings.video_url != blank %}
-    <div class="video-wrap fit-video">
-      {% if section.settings.video_url.type == 'youtube' %}
-        <iframe src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}" width="850" height="480" frameborder="0" allowfullscreen></iframe>
-      {% elsif section.settings.video_url.type == 'vimeo' %}
-        <iframe src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?color={{ settings.color_accent | replace: '#', '' }}" width="850" height="480"  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-      {% endif %}
-    </div>
-  {% else %}
-    <div class="text-center margin-top margin-bottom">
-      <i class="fa fa-youtube-play fa-4x"></i>
-    </div>
-  {% endif %}
+{% comment %}
+  CSS
+{% endcomment %}
+<style>
+  #{{ section_id }} .video-wrap {
+    max-width: {{ section.settings.video_max_width}}%;
+    margin: 0 auto;
+  }
+</style>
 
-{% render 'section-close' %}
+{% if section.settings.video_url != blank %}
+  <div class="video-wrap fit-video">
+    {% if section.settings.video_url.type == 'youtube' %}
+      <iframe src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}" frameborder="0" allowfullscreen></iframe>
+    {% elsif section.settings.video_url.type == 'vimeo' %}
+      <iframe src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?color={{ settings.color_accent | replace: '#', '' }}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    {% endif %}
+  </div>
+{% else %}
+  <div class="text-center margin-top margin-bottom">
+    <i class="fa fa-youtube-play fa-4x"></i>
+  </div>
+{% endif %}
 
+{% include 'section-close' %}
+
+{% comment %}
+  Schema
+{% endcomment %}
 {% schema %}
 {
   "name": "Video",

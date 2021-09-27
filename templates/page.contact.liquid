@@ -1,37 +1,48 @@
-{% render 'content-open', class: 'column-max', sidebar: false %}
+{% include 'settings' %}
 
-  {% render 'page-header', title: page.title %}
+{%- assign sidebar = false -%}
 
-  {% render 'separator' %}
+{% include 'content-open' class:'column-max', sidebar: false %}
+{% include 'page-header' title: page.title %}
+{% include 'separator' %}
 
-  <div class="row">
+<div class="row">
 
-    <div class="columns large-6">
-      {{ page.content }}
-    </div>
+  <div class="large-6 columns">
+    {{ page.content }}
+  </div>
 
-    {% render 'separator', class: 'margin-top margin-bottom hide-for-large' %}
+  {% comment %} Separator {% endcomment %}
+  {% include 'separator' class:'margin-top margin-bottom hide-for-large' %}
 
-    <div class="columns large-5 large-push-1">
-      <div id="contact-form">
-        {%- assign formId = 'ContactForm' -%}
-        {% form 'contact', id: formId %}
+  <div class="large-5 large-push-1 columns">
 
-          {% if form.posted_successfully? %}
-            <div class="form-success panel green text-center font-size-15" data-form-status role="alert">
-              {{ 'contact.form.posted_successfully' | t }}
-            </div>
-          {% endif %}
+    {% comment %} Contact form {% endcomment %}
+    <div id="contact-form">
+      {%- assign formId = 'ContactForm' -%}
+      {% form 'contact', id: formId %}
 
-          {% render 'form-errors', form: form %}
-
-          <div class="row">
-            <input type="text" id="name" name="contact[name]" value="{{ form.name }}" placeholder="{{ 'contact.form.name_field_placeholder' | t }}" aria-label="{{ 'contact.form.name_field_placeholder' | t }}" {% unless form.errors or form.posted_successfully?  %} data-auto-focus {% endunless %}>
-            {% render 'field-error-message', form: form, field: 'name' %}
+        {% comment %} Success message {% endcomment %}
+        {% if form.posted_successfully? %}
+          <div class="form-success panel green text-center font-size-15" data-form-status role="alert">
+            {{ 'contact.form.posted_successfully' | t }}
           </div>
+        {% endif %}
 
-          <div class="row">
-            <input type="email" id="email" name="contact[email]" value="{{ form.email }}" placeholder="{{ 'contact.form.email_field_placeholder' | t }}"
+        {% comment %} Error message {% endcomment %}
+        {% render 'form-errors', form: form %}
+
+        {% comment %} Name {% endcomment %}
+        <div class="row">
+          {% comment %}<label for="name">{{ 'contact.form.name_field_label' | t }}</label>{% endcomment %}
+          <input type="text" id="name" name="contact[name]" value="{{ form.name }}" placeholder="{{ 'contact.form.name_field_placeholder' | t }}" aria-label="{{ 'contact.form.name_field_placeholder' | t }}" {% unless form.errors or form.posted_successfully?  %} data-auto-focus {% endunless %}>
+          {% render 'field-error-message', form: form, field: 'name' %}
+        </div>
+
+        {% comment %} Email {% endcomment %}
+        <div class="row">
+          {% comment %}<label for="email">{{ 'contact.form.email_field_label' | t }}</label>{% endcomment %}
+          <input type="email" id="email" name="contact[email]" value="{{ form.email }}" placeholder="{{ 'contact.form.email_field_placeholder' | t }}"
             aria-label="{{ 'contact.form.email_field_placeholder' | t }}"
             class="{% if form.errors %} error {% endif %}"
             {% if form.errors %}
@@ -40,21 +51,24 @@
                   data-form-status
               {% endif %}>
             {% render 'field-error-message', form: form, field: 'email' %}
-          </div>
+        </div>
 
-          <div class="row">
-            <textarea id="message" name="contact[body]" placeholder="{{ 'contact.form.message_field_placeholder' | t }}" aria-label="{{ 'contact.form.message_field_placeholder' | t }}" rows="6">{% if form.body %}{{ form.body }}{% endif %}</textarea>
-            {% render 'field-error-message', form: form, field: 'body' %}
-          </div>
+        {% comment %} Message {% endcomment %}
+        <div class="row">
+          {% comment %}<label for="message">{{ 'contact.form.message_field_label' | t }}</label>{% endcomment %}
+          <textarea id="message" name="contact[body]" placeholder="{{ 'contact.form.message_field_placeholder' | t }}" aria-label="{{ 'contact.form.message_field_placeholder' | t }}" rows="6">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+          {% render 'field-error-message', form: form, field: 'body' %}
+        </div>
 
-          <div class="form-actions margin-top-50 text-right">
-            <button type="submit" class="button">{{ 'contact.form.submit' | t }}</button>
-          </div>
+        {% comment %} Submit {% endcomment %}
+        <div class="form-actions margin-top-50 text-right">
+          <button type="submit" class="button">{{ 'contact.form.submit' | t }}</button>
+        </div>
 
-        {% endform %}
-      </div>
+      {% endform %}
     </div>
-
   </div>
 
-{% render 'content-close', sidebar: false %}
+</div>
+
+{% include 'content-close', sidebar : false %}

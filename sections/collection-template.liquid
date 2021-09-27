@@ -1,52 +1,64 @@
-{% assign products_per_page = section.settings.products_per_row | times: section.settings.product_rows %}
+{% include 'settings' %}
 
+{%- assign products_per_page = section.settings.products_per_row | times: section.settings.product_rows -%}
+
+{% comment %}
+  Section
+  {%- render 'separator' section_type: 'collection-template', show_title: false %}
+{% endcomment %}
 {% render 'section-open', section: section, type: 'collection-template' %}
 
-  {% render 'page-header', section: section, class: 'row', title: collection.title, col1_class: 'columns large-6', col2_class: 'columns large-6 text-right-large', content: 'collection' %}
+{% comment %} Page header {% endcomment %}
+{% include 'page-header' content: 'page-header-content-collection' class: 'row' col1_class: 'large-6 columns' col2_class: 'large-6 columns text-right-large', title: collection.title %}
 
-  {% render 'separator', class: 'no-margin-top margin-bottom' %}
+{% comment %} Separator {% endcomment %}
+{% render 'separator', class: 'no-margin-top margin-bottom' %}
 
-  {% if collection.image and section.settings.show_collection_image %}
-    <style>
+{% comment %} Collection image {% endcomment %}
+{% if collection.image and section.settings.show_collection_image %}
+  <style>
+    .collection-image {
+      height: {{ section.settings.collection_image_height | append: 'px' }};
+      background-position: {{ section.settings.collection_image_position }};
+    }
+    @media screen and (max-width: 640px) {
       .collection-image {
-        height: {{ section.settings.collection_image_height | append: 'px' }};
-        background-position: {{ section.settings.collection_image_position }};
+        height: 300px;
       }
-      @media screen and (max-width: 640px) {
-        .collection-image {
-          height: 300px;
-        }
-      }
-    </style>
-    <div class="collection-image lazyload {{ section.settings.collection_image_width }}"
-      data-bgset="{% render 'image-bgset', image: collection.image %}"
-      data-sizes="auto" data-parent-fit="cover">
-    </div>
-    {% render 'separator' %}
-  {% endif %}
+    }
+  </style>
 
-  {% if collection.description != blank %}
-    <div class="collection-description">
-      {{ collection.description }}
-    </div>
-    {% render 'separator' %}
-  {% endif %}
+  {% include 'image' with collection.image, image_type: 'collection'%}
+  {% render 'separator' %}
+{% endif %}
 
-  {% if collection.products.size > 0 %}
-    {% paginate collection.products by products_per_page %}
+{% comment %} Collection description {% endcomment %}
+{% if collection.description != blank %}
+  <div class="collection-description">
+    {{ collection.description }}
+  </div>
+  {% render 'separator' %}
+{% endif %}
 
-      {% render 'products', section: section, collection: collection, products: collection.products, class: 'row-spacing-150' %}
+{% comment %} Products {% endcomment %}
+{% if collection.products.size > 0 %}
+  {% paginate collection.products by products_per_page %}
 
-      {% render 'pagination', paginate: paginate %}
+  {% comment %} Products {% endcomment %}
+  {% include 'products' with collection.products, class: 'row-spacing-150', show_add_to_cart_button: section.settings.show_add_to_cart_button, show_compare_at_price: section.settings.show_compare_at_price, show_from: section.settings.show_from, show_price: section.settings.show_price, show_sale_sticker: section.settings.show_sale_sticker, show_vendor: section.settings.show_vendor %}
 
-    {% endpaginate %}
-  {% else %}
-    <p class="collection-empty">{{ 'collections.empty_html' | t }}</p>
-  {% endif %}
+  {% comment %} Pagination {% endcomment %}
+  {% include 'pagination' %}
+
+  {% endpaginate %}
+{% else %}
+  <p class="collection-empty">{{ 'collections.empty_html' | t }}</p>
+{% endif %}
 
 {% render 'section-close' %}
 
 
+{% comment %} Schema {% endcomment %}
 {% schema %}
 {
   "name": "Collection page",
@@ -141,7 +153,7 @@
       "type": "checkbox",
       "id": "show_price",
       "label": "Show price",
-      "default": true
+      "default": false
     },
     {
       "type": "checkbox",
@@ -161,6 +173,12 @@
       "label": "Show sale sticker",
       "info": "Shown when product has 'compare at' price that's higher than 'price'",
       "default": true
+    },
+    {
+      "type": "color",
+      "id": "bg_details_color",
+      "label": "Details background",
+      "default": "#ffffff"
     }
   ]
 }
