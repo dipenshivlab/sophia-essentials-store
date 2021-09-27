@@ -1,10 +1,15 @@
-{% render 'section-open', section: section, type: 'html' %}
+{% include 'settings' %}
 
-  {{ section.settings.html }}
+{% comment %}
+  Section
+{% endcomment %}
+{%- render 'separator' section_type: 'html', show_title: true %}
+{{ section.settings.html }}
+{% include 'section-close'  %}
 
-{% render 'section-close' %}
-
-
+{% comment %}
+  Schema
+{% endcomment %}
 {% schema %}
 {
   "name": "Custom HTML",

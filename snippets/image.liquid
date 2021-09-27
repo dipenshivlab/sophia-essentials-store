@@ -1,8 +1,10 @@
 {% if image_placeholder != true %}
 
-  {% assign image_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
-  {% assign master_image_url = image | img_url: 'master' %}
-  {% assign image_attributes = image_attributes | append: ' data-src-master="' | append: master_image_url | append: '"' %}
+  {%- assign image_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+  {%- assign master_image_url = image | img_url: 'master' -%}
+
+  {%- assign image_attributes = image_attributes | append: ' data-src-master="' | append: master_image_url | append: '"' -%}
+
   {% if image_class %}
     {% assign image_container_class = image_container_class | append: image_class | append: '-container' %}
   {% endif %}
@@ -10,24 +12,28 @@
     {% assign image_container_class = image_container_class | append: ' focusable' %}
   {% endif %}
   {% if image_widths %}
-    {% assign image_attributes = image_attributes | append: ' data-widths="[' | append: image_widths | append: ']"' %}
+    {%- assign image_attributes = image_attributes | append: ' data-widths="[' | append: image_widths | append: ']"' -%}
   {% endif %}
   {% if image.aspect_ratio %}
     {% if image.preview_image and image.preview_image.aspect_ratio %}
-      {% assign image_container_padding_top = 1 | divided_by: image.preview_image.aspect_ratio | times: 100 | append: '%' %}
+      {%- assign image_container_padding_top = 1 | divided_by: image.preview_image.aspect_ratio | times: 100 | append: '%' -%}
     {% else %}
-      {% assign image_container_padding_top = 1 | divided_by: image.aspect_ratio | times: 100 | append: '%' %}
+      {%- assign image_container_padding_top = 1 | divided_by: image.aspect_ratio | times: 100 | append: '%' -%}
     {% endif %}
   {% else %}
-    {% assign image_container_padding_top = '100%' %}
+    {%- assign image_container_padding_top = '100%' -%}
   {% endif %}
+
   {% unless image_alt %}
-    {% assign image_alt = image.alt %}
-  {% endunless %}
-  {% unless fallback_image_size %}
-    {% assign fallback_image_size = '800x' %}
+    {%- assign image_alt = image.alt -%}
   {% endunless %}
 
+  {% unless fallback_image_size %}
+    {%- assign fallback_image_size = '800x' -%}
+  {% endunless %}
+  {% comment %}
+    Image
+  {% endcomment %}
   <div class="image-container {{ image_container_class }}" style="max-width: {{ image.width }}px;" data-media-id="{{ image.id }}" {{ image_container_attributes }}>
     {% if image %}
       {% if image_link_url != blank %}
@@ -48,19 +54,19 @@
     </div>
   </noscript>
 
-  {% assign image_class = nil %}
-  {% assign image_container_class = nil %}
-  {% assign image_attributes = nil %}
+  {%- assign image_class = nil -%}
+  {%- assign image_container_class = nil -%}
+  {%- assign image_attributes = nil -%}
 
 {% else %}
 
   {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-
+  
   <div class="image-container">
     {% if image_type %}
-      {% assign placeholder = image_type | append: '-' | append: current %}
+      {%- assign placeholder = image_type | append: '-' | append: current -%}
     {% else %}
-      {% assign placeholder = 'image' %}
+      {%- assign placeholder = 'image' -%}
     {% endif %}
     {{ placeholder | placeholder_svg_tag: 'placeholder-svg' }}
   </div>

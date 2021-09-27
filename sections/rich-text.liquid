@@ -1,53 +1,80 @@
+{% include 'settings' %}
 {% render 'section-open', section: section, type: 'rich-text', title: false %}
 
-  {% if section.blocks.size > 0 %}
+{% comment %}
+  Section
+{% endcomment %}
+{%- render 'separator' section_type: 'rich-text', show_title: true %}
 
-    {% for block in section.blocks %}
+{% comment %}
+  Blocks
+{% endcomment %}
+{% if section.blocks.size > 0 %}
 
-      {% render 'block-open', section: section, block: block %}
+  {% for block in section.blocks %}
 
-        <style>
-          #section-block-{{ block.type }}-{{ block.id }} .section-block-header-heading,
-          #section-block-{{ block.type }}-{{ block.id }} .rte {
-            color: {{ block.settings.color }};
-            text-align: {{ block.settings.alignment }};
-          }
-        </style>
+  {% render 'block-open', section: section, block: block %}
 
-        {% if block.type == 'text' %}
-          <span class="rte">
-            {{ block.settings.text }}
-          </span>
-        {% elsif block.type == 'page' %}
-          {% assign page = pages[block.settings.page] %}
-          {% if page != empty %}
-            <span class="rte">
-              {{ page.content }}
-            </span>
-          {% else %}
-            <div class="no-content">
-              <p class="no-margin">{{ 'onboarding.select_page' | t }}</p>
-            </div>
-          {% endif %}
+    {% comment %}
+      CSS
+    {% endcomment %}
+    <style>
+      #{{ block_id }} .section-block-header-heading,
+      #{{ block_id }} .rte {
+        {% if block.settings.color %}
+          color: {{ block.settings.color }};
         {% endif %}
 
-      {% render 'block-close' %}
+        text-align: {{ block.settings.alignment }};
+      }
 
-      {% unless forloop.last %}
-        {% render 'separator', class: 'margin-top-50 margin-bottom' %}
-      {% endunless %}
+    </style>
 
-    {% endfor %}
+    {% comment %}
+      Text block
+    {% endcomment %}
+    {% if block.type == 'text' %}
 
-  {% else %}
+      <span class="rte">
+        {{ block.settings.text }}
+      </span>
 
-    {% render 'no-blocks' %}
+    {% comment %}
+      Page block
+    {% endcomment %}
+    {% elsif block.type == 'page' %}
+      {%- assign block_page = pages[block.settings.page] -%}
+      {% if block_page != empty %}
+        <span class="rte">
+          {{ block_page.content }}
+        </span>
+      {% else %}
+        <div class="no-content">
+          <p class="no-margin">{{ 'onboarding.select_page' | t }}</p>
+        </div>
+      {% endif %}
+    {% endif %}
 
-  {% endif %}
+    {% render 'block-close' %}
 
-{% render 'section-close' %}
+    {% unless forloop.last %}
+      {% render 'separator', class: 'margin-top-50 margin-bottom' %}
+    {% endunless %}
+
+  {% endfor %}
+
+{% else %}
+
+  {% render 'no-blocks' %}
+
+{% endif %}
+
+{% include 'section-close' %}
 
 
+{% comment %}
+  Schema
+{% endcomment %}
 {% schema %}
 {
   "name": "Rich text",

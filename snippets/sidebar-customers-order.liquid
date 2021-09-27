@@ -1,3 +1,6 @@
+{% comment %}
+  Billing address
+{% endcomment %}
 <section class="secondary-block secondary-block-customer-address">
   <header>
     <h1>{{ 'customer.order.billing_address' | t }}</h1>
@@ -7,8 +10,14 @@
   </div>
 </section>
 
-{% render 'separator', class: 'lined margin-top margin-bottom' %}
+{% comment %}
+  Separator
+{% endcomment %}
+{% include 'separator' class:'lined margin-top margin-bottom' %}
 
+{% comment %}
+  Shipping address
+{% endcomment %}
 <section class="secondary-block secondary-block-customer-address">
   <header>
     <h1>{{ 'customer.order.shipping_address' | t }}</h1>

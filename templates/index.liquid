@@ -1,5 +1,4 @@
-{% render 'content-open', class: 'padding-top-0' %}
-
-  {{ content_for_index }}
-
-{% render 'content-close' %}
+{% include 'settings' %}
+{% include 'content-open' class: 'padding-top-0' %}
+{{ content_for_index }}
+{% include 'content-close' %}

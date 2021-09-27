@@ -1,28 +1,45 @@
+{% include 'settings' %}
 {% render 'section-open', section: section, type: 'separator', title: false %}
 
-  <style>
-    #shopify-section-{{ section.id }} .separator {
-      {% if section.settings.line_color %}
-        border-bottom-color: {{ section.settings.line_color }};
-      {% endif %}
-      border-bottom-width: {{ section.settings.line_thickness | escape }};
-    }
-  </style>
+{% comment %}
+  Section
+{% endcomment %}
+{%- render 'separator' section_type: 'separator', show_title: true %}
 
-  {% assign class = class | append: ' ' | append: section.settings.margin_top %}
-  {% assign class = class | append: ' ' | append: section.settings.margin_bottom %}
+{% comment %}
+  CSS
+{% endcomment %}
+<style>
+  #{{ section_id }} .separator {
+    {% if section.settings.line_color %}
+      border-bottom-color: {{ section.settings.line_color }};
+    {% endif %}
+    border-bottom-width: {{ section.settings.line_thickness | escape }};
+  }
+</style>
 
-  {% if section.settings.show_line %}
-    {% assign class = class | append: ' lined' %}
-  {% endif %}
+{% comment %}
+  Spacing
+{% endcomment %}
+{%- assign class = class | append: ' ' | append: section.settings.margin_top -%}
+{%- assign class = class | append: ' ' | append: section.settings.margin_bottom -%}
 
-  <div class="separator {{ class }} {{ section.settings.width }}" aria-hidden="true"></div>
+{% comment %}
+  Show line
+{% endcomment %}
+{% if section.settings.show_line %}
+ {%- assign class = class | append: ' lined' -%}
+{% endif %}
 
-  {% assign class = nil %}
+<div class="separator {{ class }} {{ section.settings.width }}" aria-hidden="true"></div>
 
-{% render 'section-close' %}
+{%- assign class = nil -%}
 
+{% include 'section-close'  %}
 
+{% comment %}
+  Schema
+{% endcomment %}
 {% schema %}
 {
   "name": "Separator",
@@ -99,8 +116,7 @@
         "margin_top": "margin-top",
         "margin_bottom": "margin-bottom",
         "show_line": true,
-        "line_color": "#565656",
-        "width": "wide",
+        "width": "medium",
         "line_thickness": "1px"
       }
     }

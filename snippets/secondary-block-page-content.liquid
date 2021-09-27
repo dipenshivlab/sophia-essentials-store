@@ -1,8 +1,10 @@
-{% assign page = pages[block.settings.page] %}
+{% include 'settings' %}
 
-{% if page != empty %}
+{%- assign sb_page = pages[block.settings.page] -%}
+
+{% if sb_page != empty %}
   <span class="rte">
-    {{ page.content }}
+    {{ sb_page.content }}
   </span>
 {% else %}
   <div class="no-content">

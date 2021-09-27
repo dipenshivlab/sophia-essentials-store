@@ -1,103 +1,120 @@
+{% include 'settings' %}
+
 {% render 'section-open', section: section, type: 'image-with-text', title: false %}
 
-  <style>
-    #shopify-section-{{ section.id }} .image-with-text-section-inner .cell {
-      width: 50%;
-    }
-    #shopify-section-{{ section.id }} .image-with-text-section-inner-text {
-      text-align: {{ section.settings.text_alignment }};
-    }
-    #shopify-section-{{ section.id }} .image-with-text-section-inner-text-text > *:last-child {
-      margin-bottom: 0;
-    }
-    #shopify-section-{{ section.id }} .image-with-text-section-inner-text-heading {
-      color: {{ section.settings.color_text }};
-      {% if section.settings.heading != blank and section.settings.text == blank %}
-        margin: 0;
-      {% else %}
-        margin-top: 0;
-      {% endif %}
-    }
-    #shopify-section-{{ section.id }} .image-with-text-section-inner.mod-layout-image-left .image-with-text-section-inner-text {
-      padding-left: 4rem;
-    }
-    #shopify-section-{{ section.id }} .image-with-text-section-inner.mod-layout-image-right .image-with-text-section-inner-text {
-      padding-right: 4rem;
-    }
-    @media screen and (max-width: 640px) {
-      #shopify-section-{{ section.id }} .image-with-text-section-inner {
-      {% if section.settings.image_first and section.settings.layout == 'right' %}
-        display: flex;
-        flex-direction: column-reverse;
-      {% endif %}
-      }
-      #shopify-section-{{ section.id }} .image-with-text-section-inner .cell {
-        display: block;
-        width: auto;
-        height: auto;
-        {% if section.settings.image_first and section.settings.layout == 'right' %}
-        padding-bottom: 3rem;
-        {% endif %}
-      }
-      #shopify-section-{{ section.id }} .image-with-text-section-inner.mod-layout-image-left .image-with-text-section-inner-text {
-        padding: 2rem 0 0;
-      }
-      #shopify-section-{{ section.id }} .image-with-text-section-inner.mod-layout-image-right .image-with-text-section-inner-text {
-        padding: 0 0 3rem;
-      }
-    }
-  </style>
 
-  {% capture image_layout %}
-    {% if section.settings.image %}
-      {% render 'image', image: section.settings.image %}
+{% comment %}
+  Section
+{% endcomment %}
+{%- render 'separator' section_type: 'image-with-text', show_title: false %}
+
+
+{% comment %}
+  CSS
+{% endcomment %}
+<style>
+  #{{ section_id }} .image-with-text-section-inner .cell {
+    width: 50%;
+  }
+
+  #{{ section_id }} .image-with-text-section-inner-text {
+    text-align: {{ section.settings.text_alignment }};
+  }
+
+  #{{ section_id }} .image-with-text-section-inner-text-text > *:last-child {
+    margin-bottom: 0;
+  }
+
+  #{{ section_id }} .image-with-text-section-inner-text-heading {
+    color: {{ section.settings.color_text }};
+    {% if section.settings.heading != blank and section.settings.text == blank %}
+      margin: 0;
     {% else %}
-      {% render 'image', image_placeholder: true %}
+      margin-top: 0;
     {% endif %}
-  {% endcapture %}
+  }
 
-  <div class="image-with-text-section-inner mod-layout-image-{{ section.settings.layout }} table">
+  #{{ section_id }} .image-with-text-section-inner.mod-layout-image-left .image-with-text-section-inner-text {
+    padding-left: 4rem;
+  }
 
-    {% if section.settings.layout == 'left' %}
-      <div class="image-with-text-section-inner-image cell">
-        {{ image_layout }}
-      </div>
-    {% endif %}
+  #{{ section_id }} .image-with-text-section-inner.mod-layout-image-right .image-with-text-section-inner-text {
+    padding-right: 4rem;
+  }
 
-    <div class="image-with-text-section-inner-text cell">
+  @media screen and (max-width: 640px) {
+    #{{ section_id }} .image-with-text-section-inner {
+      display: block;
+    }
 
-      {% unless section.settings.heading == blank %}
-        <h2 class="image-with-text-section-inner-text-heading lhxt">
-          {{ section.settings.heading | escape }}
-        </h2>
-      {% endunless %}
+    #{{ section_id }} .image-with-text-section-inner .cell {
+      display: block;
+      width: auto;
+    }
 
-      {% unless section.settings.text == blank %}
-        <div class="image-with-text-section-inner-text-text">{{ section.settings.text }}</div>
-      {% endunless %}
+    #{{ section_id }} .image-with-text-section-inner.mod-layout-image-left .image-with-text-section-inner-text {
+      padding: 2rem 0 0;
+    }
 
-      {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+    #{{ section_id }} .image-with-text-section-inner.mod-layout-image-right .image-with-text-section-inner-text {
+      padding: 0 0 3rem;
+    }
+  }
+</style>
 
-        {% render 'separator', class: 'margin-top-50 margin-bottom-50' %}
+{% capture image_layout %}
+  {% if section.settings.image %}
+    {% include 'image' with section.settings.image %}
+  {% else %}
+    {% include 'image' image_placeholder: true %}
+  {% endif %}
+{% endcapture %}
 
-        <a href="{{ section.settings.button_link }}" target="" class="button">
-          {{ section.settings.button_label | escape }}
-        </a>
+<div class="image-with-text-section-inner mod-layout-image-{{ section.settings.layout }} table">
 
-      {% endif %}
+  {% if section.settings.layout == 'left' %}
+    <div class="image-with-text-section-inner-image cell">
+      {{ image_layout }}
     </div>
+  {% endif %}
 
-    {% if section.settings.layout == 'right' %}
-      <div class="image-with-text-section-inner-image cell">
-        {{ image_layout }}
-      </div>
+  <div class="image-with-text-section-inner-text cell">
+
+    {% unless section.settings.heading == blank %}
+      <h2 class="image-with-text-section-inner-text-heading lhxt">
+        {{ section.settings.heading | escape }}
+      </h2>
+    {% endunless %}
+
+    {% unless section.settings.text == blank %}
+      <div class="image-with-text-section-inner-text-text">{{ section.settings.text }}</div>
+    {% endunless %}
+
+    {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+
+      {% include 'separator' class:'margin-top-50 margin-bottom-50' %}
+
+      <a href="{{ section.settings.button_link }}" target="" class="button">
+        {{ section.settings.button_label | escape }}
+      </a>
+
     {% endif %}
-
   </div>
 
-{% render 'section-close' %}
+  {% if section.settings.layout == 'right' %}
+    <div class="image-with-text-section-inner-image cell">
+      {{ image_layout }}
+    </div>
+  {% endif %}
+
+</div>
+
+{% include 'section-close'  %}
 
 
+{% comment %}
+  Schema
+{% endcomment %}
 {% schema %}
   {
     "name": "Image with text",

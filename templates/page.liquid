@@ -1,9 +1,7 @@
-{% render 'content-open', class: 'column-max' %}
+{% include 'settings' %}
+{% include 'content-open' class: 'column-max' %}
+{% include 'page-header' title: page.title %}
+{% include 'separator' %}
+{{ page.content }}
 
-  {% render 'page-header', title: page.title %}
-
-  {% render 'separator' %}
-
-  {{ page.content }}
-
-{% render 'content-close' %}
+{% include 'content-close' %}
