@@ -32,7 +32,7 @@
 {%- comment -%} Shop name {%- endcomment -%}
 {%- assign seo_title = seo_title | append: ' | ' -%}
 {%- assign seo_title = seo_title | append: shop.name -%}
-{%- comment -%} Meta description {%- endcomment -%}
+{%- comment -%} Meta description 
   <title>{{ seo_title }}</title>
   {%- if seo_description -%}
   {%- assign page_description = seo_description -%}
@@ -40,3 +40,4 @@
   {%- if page_description -%}
   <meta name="description" content="{{ page_description | escape }}">
   {%- endif -%}
+  {%- endcomment -%}

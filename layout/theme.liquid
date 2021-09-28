@@ -98,7 +98,8 @@
     {%- section 'footer' -%}
     <div id="overlay-background"></div>
     {%- comment -%} JavaScript {%- endcomment -%}
-    {{ '/services/javascripts/currencies.js' | script_tag }}
+    {%- assign random_number = "now" | date: "%N" | modulo: 300000000 | plus: 700000000 -%}
+    {{ '/services/javascripts/currencies.js?v=' | append: random_number | script_tag }}
     {{ 'jquery.currencies.min.js' | asset_url | script_tag }}
     {{ 'theme.js' | asset_url | script_tag }}
     {%- comment -%}{{ 'theme-custom.js' | asset_url | script_tag }}{%- endcomment -%}
