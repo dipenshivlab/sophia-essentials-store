@@ -9,7 +9,12 @@
 {% render 'section-open', section: section, type: 'collection-template' %}
 
 {% comment %} Page header {% endcomment %}
-{% include 'page-header' content: 'page-header-content-collection' class: 'row' col1_class: 'large-6 columns' col2_class: 'large-6 columns text-right-large', title: collection.title %}
+{%- if collection.id == blank -%}
+  {%- assign collectionTitle = 'All ' | append: collection.title -%}
+{%- else -%}
+  {%- assign collectionTitle = collection.title -%}
+{%- endif -%}
+{% include 'page-header' content: 'page-header-content-collection' class: 'row' col1_class: 'large-6 columns' col2_class: 'large-6 columns text-right-large', title: collectionTitle %}
 
 {% comment %} Separator {% endcomment %}
 {% render 'separator', class: 'no-margin-top margin-bottom' %}
