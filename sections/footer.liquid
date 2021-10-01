@@ -194,7 +194,7 @@
       {% capture current_year %}{{ 'now' | date: '%Y' }}{% endcapture %}
       {% capture shop_name_with_link %}{{ shop.name | link_to: routes.root_url }}{% endcapture %}
 
-      {{ 'general.copyright_html' | t: current_year: current_year, shop_name_with_link: shop_name_with_link }} {{ powered_by_link }}.
+      {{ 'general.copyright_html' | t: current_year: current_year, shop_name_with_link: shop_name_with_link }}{%- comment -%} {{ powered_by_link }}.{%- endcomment -%}
     </div>
 
   </div>
