@@ -416,7 +416,8 @@
       {% if section.settings.show_tags and product.tags.size > 0 %}
         <div class="tags">
         {% for tag in product.tags %}
-          {{ tag | replace: ' ', '&nbsp;' | link_to_tag: tag }}
+          <span>{{tag}}</span>
+          {%- comment -%}{{ tag | replace: ' ', '&nbsp;' | link_to_tag: tag }}{%- endcomment -%}
         {% endfor %}
         </div>
       {% endif %}
