@@ -7,7 +7,7 @@
   {% comment %}
     Image
   {% endcomment %}
-  {%- assign product_link_url = product.url | within: collection -%}
+  {%- assign product_link_url = product.url -%}
   {% include 'image' with product.featured_media, image_link_url: product_link_url, image_alt: product.featured_media.alt %}
 
   {% comment %}
@@ -25,7 +25,7 @@
       {% endcomment %}
       <header>
         <h3 class="title font-size-16">
-          <a href="{{ product.url | within: collection }}" title="{{ product.title }}">{{ product.title }}</a>
+          <a href="{{ product.url }}" title="{{ product.title }}">{{ product.title }}</a>
         </h3>
       </header>
 

@@ -13,7 +13,7 @@
 "vendor":{{ product.vendor | json }},
 "handle":{{ product.handle | json }},
 "variants":{{ product.variants | json }},
-"url":{{ product.url | within: product.collections.last | json }},
+"url":{{ product.url | json }},
 "thumbnail":{{ product.featured_image.src | product_img_url: 'thumb' | json }}
     }
     {% unless forloop.last %},{% endunless %}
